@@ -1,0 +1,26 @@
+// background
+@function getColor($color) {
+    @if map-has-key($map: $backGround, $key: $color) {
+        @return map-get($map: $backGround, $key: $color);
+    }
+    @warn("color not exist");
+    @return '';
+}
+
+// fontsize
+@function getFontSize($fz) {
+    @if map-has-key($map: $fontSize, $key: $fz) {
+        @return map-get($map: $fontSize, $key: $fz);
+    }
+    @warn('Font-size not exist');
+    @return '';
+}
+
+// fontWeight
+@function getFontWeight($fw) {
+    @if map-has-key($map: $fontWeight, $key: $fw) {
+        @return map-get($map: $fontWeight, $key: $fw);
+    }
+    @warn('Font-weight not exist');
+    @return '';
+}

@@ -1,0 +1,24 @@
+$xl: 1200px;
+$lg: 992px;
+$md: 767px;
+$sm:480px;
+
+@mixin mediaQuery($type){
+    @if $type == $xl {
+        @media (max-width:$type) {
+            @content;
+        }
+    } @else if $type == $lg {
+        @media (max-width:$type) {
+            @content;
+        }
+    } @else if $type == $md {
+        @media (max-width:$type) {
+            @content;
+        }
+    } @else if $type == $sm {
+        @media (max-width:$type) {
+            @content;
+        }
+    }
+}

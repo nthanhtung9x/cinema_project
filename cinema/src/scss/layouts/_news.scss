@@ -1,0 +1,35 @@
+.news {
+    background-color: getColor('grey');
+    padding: 32px 0;
+    &__wrapper {
+        background-color: getColor('white');
+        width: 60%;
+        margin: auto;
+        padding: 24px;
+        border-radius: 4px;
+        article {
+            @include setText(getColor('black'), getFontSize('size-32'), getFontWeight('medium'));
+            line-height: normal;
+        }
+        b {
+            @include setText(getColor('dark'), getFontSize('size-20'), getFontWeight('medium'));
+            line-height: normal;
+            margin: 12px 0;
+            display: block;
+        }
+        .post__img {
+            width: 100%;
+            text-align: center;
+            img {
+                width: 100%;
+                max-height: 500px;
+            }
+        }
+        p {
+            @include setText(getColor('dark'), getFontSize('size-18'), getFontWeight('regular'));
+            line-height: 1.6;
+            margin: 16px 0;
+            word-spacing: 2px;
+        }
+    }
+}

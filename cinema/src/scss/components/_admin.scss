@@ -1,0 +1,450 @@
+.admin {
+    .logo {
+        overflow: hidden;
+        a {
+            @include setText(getColor('secondary'),getFontSize('size-40'),getFontWeight('medium'));
+            display: block;
+            margin: 0;
+            padding: 24px 0;
+            width: 100%;
+            text-align: center;
+        }
+    }
+    .site-layout {
+        background: getColor('dark');
+        .name__login {
+            // margin: 24px 0 24px auto;
+            padding: 24px;
+            text-align: right;
+            span {
+                @include setText(getColor('white'),getFontSize('size-24'),getFontWeight('medium'));
+                padding: 8px;
+                border: 3px dotted getColor('white');
+                border-radius: 4px;
+            }
+        }
+        .users {
+            padding: 0 24px;
+            .btn-controls {
+                width: 100%;
+                margin: auto;
+            }
+            .table__users {
+                width: 100%;
+                padding: 16px 8px;
+                .ant-table-content {
+                    table {
+                        text-align: center;
+                        .ant-table-thead {
+                            tr {
+                                th {
+                                    @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('medium'));
+                                    text-align: center;
+                                }
+                            }
+                        }
+                        .ant-table-tbody {
+                            tr {
+                                td {
+                                    @include setText(getColor('black'),getFontSize('size-16'),getFontWeight('regular'));
+                                    .ant-tag {
+                                        font-size: getFontSize('size-16');
+                                    }
+                                    .ant-space {
+                                        .ant-btn {
+                                            text-transform: uppercase;
+                                            font-weight: getFontWeight('medium');
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                .ant-table-pagination.ant-pagination {
+                    .ant-pagination-item {
+                        @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('regular'));
+                        background-color: getColor('white');
+                        min-width: 36px;
+                        height: 36px;
+                        margin: 0 2px;
+                        line-height: 20px;
+                        a {
+                            padding: 8px;
+
+                        }
+                    }
+                    .ant-pagination-options {
+                        display: none;
+                    }
+                    .ant-pagination-prev, .ant-pagination-jump-prev,.ant-pagination-jump-next, .ant-pagination-next {
+                        .ant-pagination-item-link {
+                            color: getColor('white');
+                            .ant-pagination-item-ellipsis {
+                                color: getColor('white');
+
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .manager__theaters {
+            width: 100%;
+            padding: 0 24px;
+            margin-top: 24px;
+            .ant-table-wrapper {
+                width: 100%;
+                .ant-spin-nested-loading {
+                    .ant-table {
+                        .ant-table-container {
+                            .ant-table-thead {
+                                tr {
+                                    .ant-table-cell {
+                                        @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('medium'));
+                                        text-align: center;
+                                    }
+                                }
+                            }
+                            .ant-table-tbody {
+                                .ant-table-row {
+                                    .ant-table-cell {
+                                        @include setText(getColor('black'),getFontSize('size-16'),getFontWeight('regular'));
+                                        text-align: center;
+                                        img {
+                                            width: 50px;
+                                            height: 50px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .manager__showtimes {
+            background-color: getColor('white');
+            border-radius: 4px;
+            margin: 0 24px;
+            h1 {
+                @include setText(getColor('white'),getFontSize('size-20'),getFontWeight('medium'));
+                background-color: getColor('secondary');
+                margin: 12px 0;
+                border-radius: 4px;
+                padding: 12px;
+            }
+            .left__col {
+                .screen{
+                    @include setText(getColor('white'), getFontSize('size-32'), getFontWeight('medium'));
+                    border-bottom: 50px solid getColor('secondary');
+                    border-left: 50px solid transparent;
+                    border-right: 50px solid transparent;
+                    height: 50px;
+                    width:90%;
+                    margin: auto;
+                    text-align: center;
+                    filter: drop-shadow(4px 30px 20px rgba(255, 255, 255, 0.5));
+                }
+                .list {
+                    display:flex;
+                    align-items: center;
+                    flex-wrap: wrap;
+                    width: 90%;
+                    margin: 0px auto 24px;
+    
+                    .ghe{
+                        border: 3px solid getColor('secondary');
+                        font-size: getFontSize('size-16');
+                        margin-bottom: 1%;
+                        border-radius: 5px;
+                        color: getColor('black');
+                        text-align: center;
+                        background-color: transparent;
+                        padding: 0;
+                        width: 8%;
+                        margin: 6px 1%;
+                    }
+    
+                    .gheDaChon {
+                        border: 3px solid orange;
+                    
+                        background: orange;
+                        color: #000;
+                    
+                        cursor: no-drop !important;
+                        border-radius: 5px;
+                        display:inline-block;
+                        padding: 0;
+                        width: 8%;
+                        margin: 6px 1%;
+                    }
+                    
+                    .gheDangChon {
+                        background: rgb(109, 238, 109);
+                        border: 3px solid rgb(109, 238, 109);
+                        color: getColor('black');
+                        font-weight: getFontWeight('medium');
+                        cursor: pointer;
+                        border-radius: 5px;
+                        display:inline-block;
+                        padding: 0;
+                        width: 8%;
+                        margin: 6px 1%;
+    
+                    }
+                }
+            }
+            .note {
+                margin-top: 12px;
+                p {
+                    @include setText(getColor('black'), getFontSize('size-18'), getFontWeight('medium'));     
+                    display:flex;
+                    align-items: center;
+                    .gheDaChon {
+                        border: 3px solid orange;
+                    
+                        background: orange;
+                        color: #000;
+                    
+                        cursor: no-drop !important;
+                        border-radius: 5px;
+                        width: 45px;
+                        height: 35px;
+                        display:inline-block;
+                        margin-right: 8px;
+                    }
+                    
+                    .gheDangChon {
+                        background: rgb(109, 238, 109);
+                        border: 3px solid rgb(109, 238, 109);
+                        color: #000;
+                    
+                        cursor: pointer;
+                        border-radius: 5px;
+                        width: 45px;
+                        height: 35px;
+                        display:inline-block;
+                        margin-right: 8px;
+    
+                    }
+                    .gheChuaChon {
+                        border: 3px solid getColor('secondary');
+                        background-color: transparent;
+                        border-radius: 5px;
+                        width: 45px;
+                        height: 35px;
+                        display:inline-block;
+                        margin: 0;
+                        margin-right: 8px;
+                    }
+                }
+            }
+        }
+        .info__theater {
+            background-color: getColor('white');
+            border-radius: 4px;
+            margin: 0 24px;
+            h1 {
+                @include setText(getColor('white'),getFontSize('size-20'),getFontWeight('medium'));
+                background-color: getColor('secondary');
+                margin: 12px 0;
+                border-radius: 4px;
+                padding: 12px;
+            }
+            .ant-table-wrapper {
+                width: 100%;
+                padding: 0 8px;
+                .ant-spin-nested-loading {
+                    .ant-table {
+                        .ant-table-container {
+                            .ant-table-thead {
+                                tr {
+                                    .ant-table-cell {
+                                        @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('medium'));
+                                        text-align: center;
+                                    }
+                                }
+                            }
+                            .ant-table-tbody {
+                                .ant-table-row {
+                                    .ant-table-cell {
+                                        @include setText(getColor('black'),getFontSize('size-16'),getFontWeight('regular'));
+                                        text-align: center;
+                                        img {
+                                            width: 50px;
+                                            height: 50px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.modal__addShowTimes {
+    .ant-modal-header {
+        .ant-modal-title {
+            @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('medium'));
+        }
+    }
+    .ant-modal-body {
+        padding: 16px 24px 0px;
+        .ant-form {
+            .ant-form-item-label {
+                text-align: left;
+                label {
+                    @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('regular'));
+                }
+            }
+            .ant-btn {
+                margin: 12px 4px;
+            }
+            .ant-btn-icon-only {
+                margin: 0;
+            }
+            .ant-form-item {
+                .ant-col {
+                    .ant-form-item-control-input-content {
+                        input {
+                            font-size: getFontSize('size-16');
+                        }
+                        .ant-select-selection-item {
+                            font-size: getFontSize('size-16');
+                        }
+                        .ant-btn {
+                            height:40px;
+                            span {
+                                font-size: getFontSize('size-16');
+                                font-weight: getFontWeight('medium');
+                            }
+                        }
+                    }
+                    .ant-form-item-explain {
+                        font-size: getFontSize('size-18');
+                    }
+                }
+            }
+        }
+    }
+}
+
+.modal__addUser {
+    .ant-modal-header {
+        .ant-modal-title {
+            @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('medium'));
+        }
+    }
+    .ant-modal-body {
+        padding: 16px 24px 0px;
+        .ant-form {
+            .ant-form-item-label {
+                text-align: left;
+                label {
+                    @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('regular'));
+                }
+            }
+            .ant-btn {
+                margin: 12px 4px;
+            }
+            .ant-btn-icon-only {
+                margin: 0;
+            }
+            .ant-form-item {
+                .ant-col {
+                    .ant-form-item-control-input-content {
+                        input {
+                            font-size: getFontSize('size-18');
+                        }
+                        .ant-select-selection-item {
+                            font-size: getFontSize('size-18');
+                        }
+                        
+                    }
+                    .ant-form-item-explain {
+                        font-size: getFontSize('size-18');
+                    }
+                }
+            }
+        }
+    }
+
+    .ant-table-wrapper {
+        .ant-table {
+            .ant-table-container {
+                .ant-table-content {
+                    .ant-table-thead {
+                        tr {
+                            .ant-table-cell {
+                                background-color: getColor('secondary');
+                                color: getColor('white');
+                                text-transform: uppercase;
+                                // border: 1px solid getColor('grey');
+                                border-collapse: collapse;
+                            }
+                        }
+                    }
+                    .ant-table-tbody {
+                        .ant-table-row {
+                            .ant-table-cell {
+                                color: getColor('black');
+                                border: 1px solid getColor('grey');
+                                border-collapse: collapse;
+                                
+                                white-space: nowrap;
+                                overflow: hidden;
+                                text-overflow: ellipsis;
+                                max-width: 82px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.ant-modal.modal__addUser {
+    width: 700px !important;
+}
+
+.ant-modal.modal__historyBookTicket {
+    width: 1000px !important;
+    .ant-modal-header {
+        .ant-modal-title {
+            @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('medium'));
+        }
+    }
+    .ant-spin-nested-loading {
+        .ant-table {
+            .ant-table-container {
+                .ant-table-thead {
+                    tr {
+                        .ant-table-cell {
+                            @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('medium'));
+                            background-color: getColor('secondary');
+                            text-align: center;
+                        }
+                    }
+                }
+                .ant-table-tbody {
+                    .ant-table-row {
+                        .ant-table-cell {
+                            @include setText(getColor('black'),getFontSize('size-16'),getFontWeight('regular'));
+                            text-align: center;
+                            img {
+                                width: 50px;
+                                height: 50px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

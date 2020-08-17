@@ -1,0 +1,138 @@
+.header {
+    height: $height-header; 
+    box-shadow: 0 0 1px;
+    background-color: rgba($color: getColor('primary'), $alpha: 0.9);
+    .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 80%;
+        height: 100%;
+        margin: auto;
+        &__list {
+            .ant-menu {
+                background-color: transparent;
+                border-bottom: none;
+                .ant-menu-item {
+                    @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('regular'));
+                    
+                    a {
+                        @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('regular'));
+                    }
+                }
+                .ant-menu-submenu {
+                    .ant-menu-submenu-title {
+                        display:flex;
+                        align-items: center;
+                        span.anticon {
+                            @include setText(getColor('grey'),getFontSize('size-14'),getFontWeight('regular'));
+                            margin-top: 4px;
+                            margin-left: 1rem;
+                            order: 2;
+                        }
+                        span {
+                            order: 1;
+                            @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('regular'));
+                        }
+                        
+                    }
+                }
+            }
+        }
+        &__logo {
+            h1 {
+                @include setText(getColor('secondary'),getFontSize('size-32'),getFontWeight('medium'));
+                margin:0;
+            }
+        }
+        &__controls {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 40%;
+            .ant-input-search {
+                border-radius: 24px;
+                input {
+                    padding-left: 8px;
+                }
+            }
+            button {
+                margin-left: 12px;
+                border-radius: 24px;
+            }
+            .nav_users {
+                border-radius: 4px;
+                background-color: transparent;
+                // border: 2px dotted getColor('white');
+                box-shadow: 0 0 2px getColor('grey');
+                span {
+                    @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('medium'));
+                }              
+            }
+        }
+    }
+}
+
+
+.ant-menu-submenu {
+    .ant-menu {
+        .ant-menu-item-group {
+            .ant-menu-item-group-title {
+                padding: 0;
+                .ant-menu-item-group-list {
+                    .ant-menu-item {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+        }
+    }
+}
+
+
+.login__modal {
+    .ant-modal-content {
+        .ant-modal-body {
+            padding-bottom: 2px;
+            width: 90%;
+            margin: auto;
+            .ant-form-item {
+                .ant-form-item-label {
+                    text-align: left;
+                }
+                .ant-form-item-control {
+                    .ant-form-item-control-input {
+                        .ant-form-item-control-input-content {
+                            text-align: right;
+                            button {
+                                margin-left: 8px;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.ant-popover {
+    .ant-popover-content {
+        .ant-popover-inner {
+            .ant-popover-inner-content {
+                div {
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    a {
+                        @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('regular'));
+                        margin-bottom: 4px;
+                        transition: all 0.2s;
+                        &:hover {
+                            color: getColor('secondary');
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

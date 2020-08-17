@@ -1,0 +1,23 @@
+@import './base/reset';
+@import './theme/theme';
+@import './helpers/function';
+@import './helpers/mixin';
+@import './helpers/responsive';
+
+@import './vendors/sweetalert2';
+@import './vendors/customDropDown';
+@import './vendors/customScrollBar';
+@import './vendors/customPopConfirm';
+
+@import './components/header';
+@import './components/carousel';
+@import './components/signup';
+@import './components/detailMovie';
+@import './components/profile';
+@import './components/bookTicket';
+@import './components/theaters';
+@import './components/admin';
+@import './components/footer';
+
+@import './layouts/home';
+@import './layouts/news';

@@ -1,0 +1,91 @@
+.profile {
+    background: url('/images/background-form.jpg') no-repeat;
+    background-size: cover;
+    padding: 32px 0;
+    .profile__wrapper {
+        background-color: rgba($color: getColor('black'), $alpha: .7);
+        border-radius: 4px;
+        box-shadow: 0 0 8px getColor('black');
+
+        width: 60%;
+        height: 430px;
+        margin: auto;
+        text-align: center;
+        .ant-row {
+            height: 100%;
+            .left-col {
+                border-right: 1px dotted getColor('secondary');
+                img {
+                    width: 150px;
+                    height: 150px;
+                    border-radius: 50%;
+                    margin: 24px 0 0;
+                }
+                .profile__list {
+                    padding: 24px 12px 0;
+                    li {
+                        .ant-btn {
+                            @include setText(getColor('black'), getFontSize('size-20'),getFontWeight('medium'));
+                            height: 40px;
+                            margin-bottom: 8px;
+                            transition: all 0.2s;
+                            &:hover {
+                                background-color: getColor('secondary');
+                                color: getColor('white');
+                            }
+                        }
+                    }
+                }
+            }
+            .info__user {
+                padding: 24px;
+                .ant-form-item-label {
+                    text-align: left;
+                    .ant-form-item-required {
+                        @include setText(getColor('white'), getFontSize('size-20'),getFontWeight('medium'));
+                    }
+                }
+                .ant-form-item-control {
+                    .ant-form-item-explain {
+                        text-align: left;
+                    }
+                }
+            }
+            .info_ticket {
+                .ant-table-wrapper {
+                    .ant-table {
+                        .ant-table-container {
+                            .ant-table-content {
+                                .ant-table-thead {
+                                    tr {
+                                        .ant-table-cell {
+                                            background-color: getColor('secondary');
+                                            color: getColor('white');
+                                            text-transform: uppercase;
+                                            // border: 1px solid getColor('grey');
+                                            border-collapse: collapse;
+                                        }
+                                    }
+                                }
+                                .ant-table-tbody {
+                                    .ant-table-row {
+                                        .ant-table-cell {
+                                            color: getColor('black');
+                                            border: 1px solid getColor('grey');
+                                            border-collapse: collapse;
+                                            
+                                            white-space: nowrap;
+                                            overflow: hidden;
+                                            text-overflow: ellipsis;
+                                            max-width: 82px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

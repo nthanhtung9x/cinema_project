@@ -1,0 +1,30 @@
+.ant-popover {
+    .ant-popover-content {
+        .ant-popover-inner {
+            .ant-popover-inner-content {
+                .ant-popover-message {
+                    flex-direction: row-reverse;
+                    .anticon {
+                        font-size: getFontSize('size-16');
+                        margin-top: 2px;
+                    }
+                    .ant-popover-message-title {
+                        @include setText(getColor('black'),getFontSize('size-16'),getFontWeight('regular'));
+                        padding-right: 20px;
+                        padding-left: 0;
+                    }
+                }
+                .ant-popover-buttons {
+                    flex-direction: row;
+                    width: 60%;
+                    margin: auto;
+                    .ant-btn {
+                        flex: 1;
+                        border-radius: 4px;
+                        height: 30px;
+                    }
+                }
+            }
+        }
+    }
+}

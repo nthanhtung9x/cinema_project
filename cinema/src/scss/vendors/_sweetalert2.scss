@@ -1,0 +1,21 @@
+.swal2-container {
+    .swal2-popup {
+        width: 400px;
+        .swal2-header {
+            .swal2-title {
+                @include setText(getColor('black'), getFontSize('size-24'), getFontWeight('medium'));
+            }
+        }
+        .swal2-actions {
+            .swal2-confirm {
+                @include setText(getColor('white'), getFontSize('size-18'), getFontWeight('medium'));
+                padding: 8px 36px;
+            }
+            .swal2-cancel {
+                @include setText(getColor('white'), getFontSize('size-18'), getFontWeight('medium'));
+                padding: 8px 36px;
+                
+            }
+        }
+    }
+}
