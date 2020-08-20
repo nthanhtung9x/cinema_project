@@ -1,3 +1,3 @@
 # cinema_project
 
-Folder: Component -> Admin -> ManagerFilm -> TableFilm
+Folder: Component -> Admin -> ManagerFilm -> FormUpdateFilm
