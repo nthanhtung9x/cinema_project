@@ -1,0 +1,7 @@
+@keyframes arrowVertical {
+    0% { transform: translateX(0); color: getColor('white'); }
+    25% { transform: translateX(2px); color: getColor('dark'); }
+    50% { transform: translateX(4px); color: getColor('primary'); }
+    75% { transform: translateX(2px); color: getColor('dark'); }
+    100% { transform: translateX(0); color: getColor('white'); }
+}

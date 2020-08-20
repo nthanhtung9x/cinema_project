@@ -63,8 +63,8 @@ const NewsComponent = () => {
     }
 
     return (
-        <div className="news" id="newsId">
-            <div className="news__wrapper">
+        <div className="news__home" id="newsId">
+            <div className="news__home__wrapper">
                 <h1>TIN TỨC</h1>
                 <Row gutter={16}>
                     {renderPostMain()}

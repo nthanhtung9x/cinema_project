@@ -27,6 +27,7 @@ const FilmView = ({ dispatch , filmList, filmListSoon }) => {
     },[]);
 
     const renderFilmNow = () => {
+        console.log(filmList);
         return filmList.map((item, index) => {
             return  <div className="item" key={index}>
                         <Link to={`/detailMovie/${item.maPhim}`} className="img__film">

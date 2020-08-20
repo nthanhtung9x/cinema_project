@@ -7,7 +7,6 @@ import {
 } from 'antd';
 import axios from 'axios';
 import { connect } from 'react-redux';
-import * as action from '../../redux/Actions';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 
@@ -103,11 +102,11 @@ const SignupComponent = ({ dispatch }) => {
                     rules={[
                     {
                         required: true,
-                        message: 'Vui lòng tên tài khoản!',
+                        message: 'Vui lòng nhập tên tài khoản!',
                     },
                     ]}
                 >
-                    <Input />
+                    <Input placeholder="Nhập tài khoản" />
                 </Form.Item>
                 <Form.Item
                     name="matKhau"
@@ -120,7 +119,7 @@ const SignupComponent = ({ dispatch }) => {
                     ]}
                     hasFeedback
                 >
-                    <Input.Password />
+                    <Input.Password placeholder="Nhập mật khẩu" />
                 </Form.Item>
                 <Form.Item
                     name="confirm"
@@ -142,7 +141,7 @@ const SignupComponent = ({ dispatch }) => {
                     }),
                     ]}
                 >
-                    <Input.Password />
+                    <Input.Password placeholder="Nhập lại mật khẩu" />
                 </Form.Item>
                 <Form.Item
                     name="email"
@@ -158,14 +157,14 @@ const SignupComponent = ({ dispatch }) => {
                     },
                     ]}
                 >
-                    <Input />
+                    <Input placeholder="Nhập email" />
                 </Form.Item>
                 <Form.Item
                     name="hoTen"
                     label="Họ Tên"
                     rules={[{ required: true, message: 'Vui lòng nhập họ tên!', whitespace: true }]}
                 >
-                    <Input />
+                    <Input placeholder="Nhập họ tên" />
                 </Form.Item>
 
                 <Form.Item
@@ -173,7 +172,7 @@ const SignupComponent = ({ dispatch }) => {
                     label="Số điện thoại"
                     rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
                 >
-                    <Input style={{ width: '100%' }} />
+                    <Input style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
                     <Button type="primary" htmlType="submit" size="large" loading={loading}>

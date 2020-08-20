@@ -160,9 +160,7 @@ const TableUser = ({ userList, messageDelete, dispatch, searchUserName, searchNa
                                 cancelText="Hủy"
                                 onConfirm={() => handleDeleteUser(item.taiKhoan)}
                             >
-                                <Button onClick={() => {
-
-                                }}>Xóa</Button>
+                                <Button>Xóa</Button>
                             </Popconfirm>
                         </Space>
           },

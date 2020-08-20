@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { Row, Col, Form, Input, Button, Table, Tooltip } from 'antd';
+import { Row, Col, Form, Input, Button, Table, Tooltip, message } from 'antd';
 import axios from 'axios';
 import { connect } from 'react-redux';
+import Swal from 'sweetalert2';
 
 const layout = {
     labelCol: { span: 8 },
@@ -14,6 +15,7 @@ const tailLayout = {
 
 const ProfileComponent = ({ userLogin }) => {
     const [toggle, setToggle] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [user, setUser] = useState({});
     const [form] = Form.useForm();
     const getProfileUser = useCallback(() => {
@@ -29,7 +31,7 @@ const ProfileComponent = ({ userLogin }) => {
                     matKhau: res.data.matKhau,
                     hoTen: res.data.hoTen,
                     email: res.data.email,
-                    soDT: res.data.soDT,
+                    soDt: res.data.soDT,
                     maNhom: res.data.maNhom
                 });
                 const temp = res.data.thongTinDatVe.map((item, index) => {
@@ -48,14 +50,40 @@ const ProfileComponent = ({ userLogin }) => {
     useEffect(() => getProfileUser(),[]);
 
     const onFinish = values => {
-        console.log('Success:', values);
+        axios({
+            method:'PUT',
+            url:'http://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung',
+            headers: {
+                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
+            },
+            data: {
+                taiKhoan: values.taiKhoan,
+                matKhau: values.matKhau,
+                email: values.email,
+                soDt: values.soDt,
+                maNhom: values.maNhom,
+                maLoaiNguoiDung: "QuanTri",
+                hoTen: values.hoTen
+            }
+        }).then(res => {
+            setLoading(true);
+            setTimeout(() => {
+                setLoading(false);
+                getProfileUser();
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cập nhật thành công',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            },1000);
+        }).catch(err => {
+            message.error(err.response.data);
+        });
     };
 
     //table 
-
     const dataSource = user.thongTinDatVe;
-    
-
 
     const columns = [
         {
@@ -188,7 +216,7 @@ const ProfileComponent = ({ userLogin }) => {
 
                                     <Form.Item
                                         label="Số Điện Thoại"
-                                        name="soDT"
+                                        name="soDt"
                                         rules={[{ required: true, message: 'Please input your password!' }]}
                                     >
                                         <Input/>
@@ -201,7 +229,7 @@ const ProfileComponent = ({ userLogin }) => {
                                     </Form.Item>
 
                                     <Form.Item {...tailLayout}>
-                                        <Button type="primary" className="ant-btn-block" htmlType="submit" size="large">
+                                        <Button type="primary" className="ant-btn-block" htmlType="submit" size="large" loading={loading}>
                                             Chỉnh sửa
                                     </Button>
                                     </Form.Item>

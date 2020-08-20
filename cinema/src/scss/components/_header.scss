@@ -1,7 +1,14 @@
 .header {
+    position: fixed;
+    top:0;
+    left: 0;
+    right: 0;
+    z-index: 20;
+
+    background-color: rgba($color: getColor('primary'), $alpha: 0.9);
+    
     height: $height-header; 
     box-shadow: 0 0 1px;
-    background-color: rgba($color: getColor('primary'), $alpha: 0.9);
     .nav {
         display: flex;
         align-items: center;

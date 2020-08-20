@@ -14,7 +14,14 @@ const News = ({ match }) => {
         }).catch(err => console.log(err));
     }
 
-    useEffect(() => getPostAPI(), []);
+    const handleSscrollTop = () => {
+        window.scrollTo(0,0);
+    }
+
+    useEffect(() => {
+        handleSscrollTop();
+        getPostAPI()
+    }, []);
 
     const renderPost = () => {
         return <>

@@ -2,6 +2,8 @@
     background: url('/images/background-form.jpg') no-repeat;
     background-size: cover;
     padding: 32px 0;
+    margin-top: $height-header;
+
     &__wrap {
         background-color: rgba($color: getColor('black'), $alpha: 0.8);
         width: 40%;
@@ -17,7 +19,11 @@
         .ant-form {
             .ant-row {
                 .ant-form-item-label {
-                    text-align: left;
+                    display: flex;
+                    align-items: center;
+                    margin-top: 10px;
+                    transition: all 0.2s;
+
                     label {
                         @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('medium'));
                     }
@@ -30,6 +36,12 @@
                     .ant-form-item-children-icon {
                         top:60%;
                     }
+                }
+            }
+            .ant-form-item-has-error {
+                .ant-form-item-label {
+                    margin-top: -12px;
+                    transition: all 0.2s;
                 }
             }
         }

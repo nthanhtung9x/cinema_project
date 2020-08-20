@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Menu, Input, Modal, Button, Form, Popover, message } from 'antd';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
 import { Link, Redirect, useHistory } from "react-router-dom";
@@ -9,7 +9,7 @@ import Swal from 'sweetalert2';
 const { SubMenu } = Menu;
 const { Search } = Input;
 
-const HeaderComponent = ({ visible, userLogin, messageLogin, theaters,  dispatch }) => {
+const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters,  dispatch }) => {
     const [current, setCurrent] = useState('');
 
     const handleClick = e => {
@@ -55,18 +55,11 @@ const HeaderComponent = ({ visible, userLogin, messageLogin, theaters,  dispatch
     };
 
     useEffect(() => {
-        if(messageLogin) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Đăng nhập thành công',
-                showConfirmButton: false,
-                timer: 2000
-            })
-            
-        } else if(messageLogin === false) {
+        if(messageLogin === false) {
             message.error('Tài khoản hoặc mật khẩu không đúng');
         }
     },[messageLogin]);
+
     
     const handleCancel = () => {
         dispatch(action.showModalLogin());
@@ -79,16 +72,17 @@ const HeaderComponent = ({ visible, userLogin, messageLogin, theaters,  dispatch
     const content = (
         <div>
             <Link to="/profile" onClick={() => {
-                let timerInterval;
+                // let timerInterval;
                 Swal.fire({
                     timer: 2000,
                     timerProgressBar: true,
+                    showConfirmButton: false,
                     onBeforeOpen: () => {
                         Swal.showLoading();
                     },
-                    onClose: () => {
-                        clearInterval(timerInterval)
-                    }
+                    // onClose: () => {
+                    //     clearInterval(timerInterval)
+                    // }
                 }).then((result) => {
                     /* Read more about handling dismissals below */
                     if (result.dismiss === Swal.DismissReason.timer) {
@@ -199,7 +193,7 @@ const HeaderComponent = ({ visible, userLogin, messageLogin, theaters,  dispatch
                         </Button>
                     }
                     <Modal
-                        title="Đăng nhập"
+                        title="ĐĂNG NHẬP"
                         name="loginForm"
                         visible={visible}
                         confirmLoading={modalStyle.confirmLoading}
@@ -246,7 +240,7 @@ const HeaderComponent = ({ visible, userLogin, messageLogin, theaters,  dispatch
             </div>
         </header>
     )
-}
+});
 
 const mapStateToProps = state => {
     return {

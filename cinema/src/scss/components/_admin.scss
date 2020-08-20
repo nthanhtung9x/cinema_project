@@ -17,7 +17,7 @@
             padding: 24px;
             text-align: right;
             span {
-                @include setText(getColor('white'),getFontSize('size-24'),getFontWeight('medium'));
+                @include setText(getColor('white'),getFontSize('size-20'),getFontWeight('medium'));
                 padding: 8px;
                 border: 3px dotted getColor('white');
                 border-radius: 4px;
@@ -144,7 +144,8 @@
                     width:90%;
                     margin: auto;
                     text-align: center;
-                    filter: drop-shadow(4px 30px 20px rgba(255, 255, 255, 0.5));
+                    -webkit-filter: drop-shadow(4px 30px 20px rgba(255, 255, 255, 0.5));
+                            filter: drop-shadow(4px 30px 20px rgba(255, 255, 255, 0.5));
                 }
                 .list {
                     display:flex;
@@ -283,6 +284,141 @@
                 }
             }
         }
+        .manager__film {
+            padding: 0 24px;
+            .btn-controls {
+                width: 100%;
+                margin: auto;
+            }
+            .ant-table-wrapper {
+                width: 100%;
+                .ant-table {
+                    width: 100%;
+                    padding: 16px 8px;
+                    .ant-table-content {
+                        table {
+                            text-align: center;
+                            .ant-table-thead {
+                                tr {
+                                    th {
+                                        @include setText(getColor('black'),getFontSize('size-16'),getFontWeight('medium'));
+                                        text-align: center;
+                                        width: 11.1111%;
+                                    }
+                                }
+                            }
+                            .ant-table-tbody {
+                                tr {
+                                    td {
+                                        @include setText(getColor('black'),getFontSize('size-16'),getFontWeight('regular'));
+                        
+                                        .ant-tag {
+                                            font-size: getFontSize('size-16');
+                                        }
+                                        .ant-space {
+                                            .ant-btn {
+                                                text-transform: uppercase;
+                                                font-weight: getFontWeight('medium');
+                                            }
+                                        }
+                                        img {
+                                            width: 50px;
+                                            height: 50px;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    .ant-table-pagination.ant-pagination {
+                        .ant-pagination-item {
+                            @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('regular'));
+                            background-color: getColor('white');
+                            min-width: 36px;
+                            height: 36px;
+                            margin: 0 2px;
+                            line-height: 20px;
+                            a {
+                                padding: 8px;
+
+                            }
+                        }
+                        .ant-pagination-options {
+                            display: none;
+                        }
+                        .ant-pagination-prev, .ant-pagination-jump-prev,.ant-pagination-jump-next, .ant-pagination-next {
+                            .ant-pagination-item-link {
+                                color: getColor('white');
+                                .ant-pagination-item-ellipsis {
+                                    color: getColor('white');
+
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+        }
+        .dashBoard {
+            background-color: getColor('grey');
+            padding: 12px;
+            margin: 0 24px 24px;
+            border-radius: 4px;
+            .map {
+                background-color: getColor('white');
+                padding: 12px 24px;
+                width: 100%;
+                box-shadow: 0 0 20px getColor('grey');
+                height: 500px;
+                h1 {
+                    @include setText(getColor('dark'),getFontSize('size-20'),getFontWeight('medium'));
+                    text-align: center;
+                    margin: 16px 0;
+                }
+            }
+            &__wrapper {
+                background-color: getColor('white');
+                .dashBoard__controls {
+                    .btn__controls {
+                        display:block;
+                        width: 100%;
+                        height: 100%;
+                        padding: 48px 0; 
+                        
+                        text-align: center;
+                        text-transform: uppercase;
+
+                        border: none;
+                        outline: none;
+                        border-radius: 4px;
+                        box-shadow: 0 0 4px;
+                        &:hover {
+                            filter: brightness(1.1);
+                        }
+                        &-1 {
+                            background-color: getColor('secondary');
+                            @include setText(getColor('white'),getFontSize('size-20'),getFontWeight('medium'));
+                        }
+                        &-2 {
+                            background-color: getColor('yellow');
+                            @include setText(getColor('white'),getFontSize('size-20'),getFontWeight('medium'));
+                        }
+                        &-3 {
+                            background-color: getColor('red');
+                            @include setText(getColor('white'),getFontSize('size-20'),getFontWeight('medium'));
+                        }
+                        .anticon-double-right {
+                            margin-left: 12px;
+                            transform: translateX(0);
+                            transition: all 0.2s;
+                            animation: arrowVertical linear 2s infinite;
+                        }
+                    }
+                }
+            }
+
+        }
     }
 }
 
@@ -363,7 +499,33 @@
                         .ant-select-selection-item {
                             font-size: getFontSize('size-18');
                         }
-                        
+                        .custom-file-input {
+                            border: 1.5px solid getColor('grey');
+                            &::-webkit-file-upload-button {
+                                visibility: hidden;
+                            }
+                            &::before {
+                                content: 'Chọn Ảnh';
+                                display: inline-block;
+                                background: linear-gradient(top, #f9f9f9, #e3e3e3);
+                                border: 1px solid #999;
+                                border-radius: 3px;
+                                padding: 5px 8px;
+                                outline: none;
+                                white-space: nowrap;
+                                -webkit-user-select: none;
+                                cursor: pointer;
+                                text-shadow: 1px 1px #fff;
+                                font-weight: 700;
+                                font-size: getFontSize('size-16');
+                            }
+                            &:hover::before {
+                                border: 1px solid getColor('grey');
+                            }
+                            &:active::before {
+                                border: 1px solid getColor('secondary');
+                            }
+                        }
                     }
                     .ant-form-item-explain {
                         font-size: getFontSize('size-18');

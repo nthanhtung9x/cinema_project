@@ -3,12 +3,14 @@
     background-attachment: fixed;
     background-size: cover;
     padding: 48px 0;
+    margin-top: $height-header;
     &__wrapper {
         width: 80%;
         margin:auto;
         .movie {
             img {
-                object-fit: cover;
+                -o-object-fit: cover;
+                   object-fit: cover;
                 border-radius: 4px;
             }
             .info {
@@ -63,7 +65,8 @@
                                 &.ant-tabs-tab-active {
                                     .ant-tabs-tab-btn {
                                         @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('medium'));
-                                        filter: brightness(1);     
+                                        -webkit-filter: brightness(1);
+                                                filter: brightness(1);     
                                         display:flex;
                                         align-items: center;
                                         justify-content: center;
@@ -75,7 +78,8 @@
                                 }
                                 .ant-tabs-tab-btn {
                                     @include setText(getColor('grey'),getFontSize('size-16'),getFontWeight('medium'));
-                                    filter: brightness(0.7);
+                                    -webkit-filter: brightness(0.7);
+                                            filter: brightness(0.7);
                                     display:flex;
                                     align-items: center;
                                     justify-content: center;
@@ -109,7 +113,8 @@
                                     p {
                                         @include setText(getColor('grey'),getFontSize('size-16'),getFontWeight('regular'));
                                         margin: 0;
-                                        filter: brightness(0.8);
+                                        -webkit-filter: brightness(0.8);
+                                                filter: brightness(0.8);
                                     }
                                 }
                                 .rate {

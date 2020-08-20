@@ -12,15 +12,16 @@ const TheatersComponent = ({ match, dispatch, userLogin, reload }) => {
 
     //scroll
     const myRef = useRef(null);
-    const executeScroll = async(ma) => {
+    const executeScroll = async(maRap) => {
         await setToggle(true);
-        await setMaCumRap(ma);
+        await setMaCumRap(maRap);
         await scrollToRef(myRef);
     };
     const [toggle, setToggle] = useState(false);
 
     const [theatersList, setTheatersList] = useState([]);
     const [maCumRap, setMaCumRap] = useState("");
+    const [tenCumRap, setTenCumRap] = useState("");
     const handleGetTheaters = () => {
         axios({
             method:"GET",
@@ -162,7 +163,7 @@ const TheatersComponent = ({ match, dispatch, userLogin, reload }) => {
     return (
         <div className="theaters">
             <div className="theaters__wrapper">
-                <h1>DANH SÁCH RẠP MEGAGS</h1>
+                <h1>DANH SÁCH RẠP {match.params.maHeThongRap}</h1>
                 <Row gutter={[16, 16]}>
                    { renderTheatersList() }
                 </Row>
