@@ -2,8 +2,11 @@ import React, { useRef, useEffect, useState } from 'react';
 import { Row, Col, Tabs } from 'antd';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { API } from '../../configs/configs';
 import { Link } from 'react-router-dom';
+import moment from 'moment';
 import * as action from '../../redux/Actions';
+
 
 const { TabPane } = Tabs;
 const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop) 
@@ -21,18 +24,18 @@ const TheatersComponent = ({ match, dispatch, userLogin, reload }) => {
 
     const [theatersList, setTheatersList] = useState([]);
     const [maCumRap, setMaCumRap] = useState("");
-    const [tenCumRap, setTenCumRap] = useState("");
+
     const handleGetTheaters = () => {
         axios({
             method:"GET",
-            url:`http://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${match.params.maHeThongRap}`
+            url:`${API}/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${match.params.maHeThongRap}`
         }).then(res => {
             setTheatersList(res.data);
         }).catch(err => console.log(err));
     }
     const renderTheatersList = () => {
         return theatersList.map((item, index) => {
-            return  <Col lg={6} key={index}>
+            return  <Col span={24} lg={6} key={index}>
                         <div className="theater__item">
                             <a onClick={() => executeScroll(item.maCumRap)}>
                                 <p>{item.tenCumRap}</p>
@@ -47,16 +50,20 @@ const TheatersComponent = ({ match, dispatch, userLogin, reload }) => {
     const getShowTimes = () => {
         axios({
             method: 'GET',
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap=${match.params.maHeThongRap}&maNhom=GP06`
+            url: `${API}/QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap=${match.params.maHeThongRap}&maNhom=GP06`
         }).then(res => {
             setShowTimes(res.data[0].lstCumRap);
-            console.log(res.data[0].lstCumRap);
         }).catch(err => console.log(err));
     } 
+
+    const handleScrollTop = () => {
+        window.scrollTo(0,0);
+    }
 
     useEffect(() => {
         handleGetTheaters();
         getShowTimes();
+        handleScrollTop();
     },[reload]);
 
     function appendLeadingZeroes(n) {
@@ -78,7 +85,7 @@ const TheatersComponent = ({ match, dispatch, userLogin, reload }) => {
                 <TabPane
                     tab={
                         <>
-                            <p>{formatted_date}</p>
+                            <p>{moment(formatted_date).format('DD-MM')}</p>
                         </>
                     }
                     key={formatted_date}
@@ -101,13 +108,13 @@ const TheatersComponent = ({ match, dispatch, userLogin, reload }) => {
                     for(let j = 0; j < child.length; j++) {
                         result.push(
                             <div className="divide__showtimes" key={j + Math.random() * 999999}>
-                                <Row gutter={16}>
-                                    <Col lg={8}>
+                                <Row gutter={[16, 16]}>
+                                    <Col span={24} lg={8}>
                                         <div className="films">
                                             <img src={child[j].hinhAnh} alt={child[j].hinhAnh}/>
                                         </div>
                                     </Col>
-                                    <Col lg={16}>
+                                    <Col span={24} lg={16}>
                                         <div className="rate">
                                             { renderSuat(j) }
                                         </div>

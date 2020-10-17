@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { Table, Space, Button, Modal, Form, Input, Select, message, Tooltip, Popconfirm, Tag } from 'antd';
 
 import { connect } from 'react-redux';
-import * as action from '../../../redux/Actions';
 import axios from 'axios';
+import * as action from '../../../redux/Actions';
+import { API } from '../../../configs/configs';
+
 import Swal from 'sweetalert2';
 
 const { Option } = Select;
@@ -179,7 +181,7 @@ const TableUser = ({ userList, messageDelete, dispatch, searchUserName, searchNa
     const showModalHistoryTicket = async(taiKhoan) => {
         axios({
             method:"POST",
-            url:'http://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/ThongTinTaiKhoan',
+            url:`${API}/QuanLyNguoiDung/ThongTinTaiKhoan`,
             data: {
                 taiKhoan
             }
@@ -320,7 +322,7 @@ const TableUser = ({ userList, messageDelete, dispatch, searchUserName, searchNa
     const onFinish = async(values) => {
         axios({
             method:'PUT',
-            url:'http://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung',
+            url:`${API}/QuanLyNguoiDung/CapNhatThongTinNguoiDung`,
             headers: {
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
             },

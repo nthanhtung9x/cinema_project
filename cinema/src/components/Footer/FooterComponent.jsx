@@ -10,7 +10,7 @@ const FooterComponent = () => {
                     <h1>TMOVIE</h1>
                 </Link>
                 <Row>
-                    <Col xs={{ span: 5 }} lg={{ span: 8 }}>
+                    <Col span={24} lg={8}>
                         <div className="f-item">
                             <article>TMOVIE Việt Nam</article>
                             <ul>
@@ -29,7 +29,7 @@ const FooterComponent = () => {
                             </ul>
                         </div>
                     </Col>
-                    <Col xs={{ span: 11 }} lg={{ span: 8 }}>
+                    <Col span={24} lg={8}>
                         <div className="f-item">
                             <article>Đối tác</article>
                             <a href="" className="f-partner">
@@ -58,7 +58,7 @@ const FooterComponent = () => {
                             </a>
                         </div>
                     </Col>
-                    <Col xs={{ span: 5 }} lg={{ span: 8 }}>
+                    <Col span={24} lg={8}>
                         <div className="f-item">
                             <article>Chăm sóc khách hàng</article>
                             <p>Hotline: <a href="tel:0921848825">0921848825</a></p>

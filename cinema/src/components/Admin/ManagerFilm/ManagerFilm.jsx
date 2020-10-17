@@ -19,7 +19,7 @@ const ManagerFilm = () => {
                 <Col lg={16}>
                     <Search
                         placeholder="Tìm kiếm theo tên phim"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => setSearchName(value)}
                         size="large"
                     />
                 </Col>
@@ -28,7 +28,7 @@ const ManagerFilm = () => {
                 </Col>
             </Row>
             <Row>
-                <TableFilm/>
+                <TableFilm searchName={searchName}/>
             </Row>
 
             {/* <Modal

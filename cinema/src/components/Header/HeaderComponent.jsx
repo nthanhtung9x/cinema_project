@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useCallback } from 'react';
-import { Menu, Input, Modal, Button, Form, Popover, message } from 'antd';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Link, Redirect, useHistory } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { Menu, Input, Modal, Button, Form, Popover, message, List, Avatar } from 'antd';
+import { DownOutlined, UserOutlined, MenuOutlined } from '@ant-design/icons';
+import { Link, Redirect } from "react-router-dom";
 import { connect } from 'react-redux';
 import * as action from '../../redux/Actions';
 import Swal from 'sweetalert2';
+import axios from 'axios';
+import { API } from '../../configs/configs';
 
 const { SubMenu } = Menu;
 const { Search } = Input;
 
-const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters,  dispatch }) => {
+const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters, dispatch }) => {
     const [current, setCurrent] = useState('');
 
     const handleClick = e => {
@@ -22,7 +24,7 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
         wrapperCol: { span: 18 },
     };
     const tailLayout = {
-        wrapperCol: { offset: 8, span: 16 },
+        wrapperCol: { span: 16 },
     };
 
     const [modalStyle, setModalStyle] = useState({
@@ -30,7 +32,8 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
     });
 
     const [form] = Form.useForm();
-    const showModal = async() => {
+    const showModal = async () => {
+        setCollapse(false);
         await dispatch(action.showModalLogin());
         await form.setFieldsValue({
             taiKhoan: "",
@@ -41,7 +44,7 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
         });
     };
 
-    const handleOk = async(values) => {
+    const handleOk = async (values) => {
         dispatch(action.handleLoginAPI(values));
         setModalStyle({
             confirmLoading: true
@@ -55,12 +58,12 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
     };
 
     useEffect(() => {
-        if(messageLogin === false) {
+        if (messageLogin === false) {
             message.error('Tài khoản hoặc mật khẩu không đúng');
         }
-    },[messageLogin]);
+    }, [messageLogin]);
 
-    
+
     const handleCancel = () => {
         dispatch(action.showModalLogin());
         setModalStyle({
@@ -72,53 +75,41 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
     const content = (
         <div>
             <Link to="/profile" onClick={() => {
-                // let timerInterval;
-                Swal.fire({
-                    timer: 2000,
-                    timerProgressBar: true,
-                    showConfirmButton: false,
-                    onBeforeOpen: () => {
-                        Swal.showLoading();
-                    },
-                    // onClose: () => {
-                    //     clearInterval(timerInterval)
-                    // }
-                }).then((result) => {
-                    /* Read more about handling dismissals below */
-                    if (result.dismiss === Swal.DismissReason.timer) {
-                        console.log('I was closed by the timer')
-                    }
-                })
+                setCollapse(false);
+                // Swal.fire({
+                //     timer: 1500,
+                //     timerProgressBar: true,
+                //     showConfirmButton: false,
+                //     onBeforeOpen: () => {
+                //         Swal.showLoading();
+                //     },
+                // }).then((result) => {
+                //     /* Read more about handling dismissals below */
+                //     if (result.dismiss === Swal.DismissReason.timer) {
+                //         console.log('I was closed by the timer')
+                //     }
+                // })
             }}>Thông tin cá nhân</Link>
-            { userLogin.maLoaiNguoiDung === 'QuanTri' ?
-                    <Link to="/admin">Quản trị hệ thống</Link>
+            {userLogin.maLoaiNguoiDung === 'QuanTri' ?
+                <Link to="/admin" onClick={() => setCollapse(false)}>Quản trị hệ thống</Link>
                 :
-                    <></>
+                <></>
             }
-            <Link to="/logout" onClick={async() => {
+            <Link to="/logout" onClick={async () => {
+                setCollapse(false);
                 await dispatch(action.login({
                     user: {},
-                    message:null
+                    message: null
                 }));
                 localStorage.removeItem('user');
                 localStorage.removeItem('message');
                 localStorage.removeItem('accessToken');
                 await message.warning('Bạn đã đăng xuất');
 
-                return <Redirect to="/"/>;
+                return <Redirect to="/" />;
             }}>Đăng xuất</Link>
         </div>
     );
-
-    // GET LIST THEATERS
-    const handleGetTheatersAPI = () => {
-        dispatch(action.getTheatersAPI());
-    }
-
-
-    useEffect(() => {
-        handleGetTheatersAPI();
-    },[]);
 
     const renderListTheaters = () => {
         return theaters.danhSachRap.map((item, index) => {
@@ -133,6 +124,53 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
         });
     }
 
+    // theaters mobile
+    const renderListTheatersMobile = () => {
+        return theaters.danhSachRap.map((item, index) => {
+            return <Link key={index} to={`/theaters/${item.maHeThongRap}`} onClick={() => {
+                    setCollapse(false);
+                    dispatch(action.reloadTheaters())
+                }}>
+                    <img src={item.logo} alt={item.logo} />
+                    {item.tenHeThongRap}
+                </Link>
+        });
+    }
+    const contentTheaters = (
+        <div>
+            { renderListTheatersMobile() }
+        </div>
+    )
+
+    // GET LIST THEATERS
+    const handleGetTheatersAPI = () => {
+        dispatch(action.getTheatersAPI());
+    }
+
+
+    useEffect(() => {
+        handleGetTheatersAPI();
+    }, []);
+
+    // search
+    const [listSearch, setListSearch] = useState([]);
+    const [visibleSearch, setVisibleSearch] = useState(false);
+
+    const handleSearch = (tenPhim) => {
+        setVisibleSearch(true);
+        if (!tenPhim) {
+            return;
+        }
+        axios({
+            method: "GET",
+            url: `${API}/QuanLyPhim/LayDanhSachPhim?maNhom=GP06&tenPhim=${tenPhim}`
+        }).then(res => {
+            setListSearch(res.data);
+        }).catch(err => console.log(err));
+    }
+
+    const [collapse, setCollapse] = useState(false);
+
     return (
         <header className="header">
             <div className="nav">
@@ -145,9 +183,9 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
                         </Menu.Item>
                         <SubMenu title="Rạp" icon={<DownOutlined />} className="nav__child">
                             <Menu.ItemGroup title="">
-                                { renderListTheaters() }
+                                {renderListTheaters()}
                             </Menu.ItemGroup>
-                        </SubMenu> 
+                        </SubMenu>
                         <Menu.Item key="news">
                             <a href="#newsId">
                                 Tin Tức
@@ -158,13 +196,6 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
                                 Liên hệ
                             </a>
                         </Menu.Item>
-                        {/* {/* <SubMenu icon={<DownOutlined />} title="Phim" className="nav__child">
-                            <Menu.ItemGroup title="">
-                                <Menu.Item key="1">Option 1</Menu.Item>
-                                <Menu.Item key="2">Option 2</Menu.Item>
-                            </Menu.ItemGroup>
-                        </SubMenu> */}
-                        
                     </Menu>
                 </div>
                 <div className="nav__logo">
@@ -173,22 +204,49 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
                 <div className="nav__controls">
                     <Search
                         placeholder="Từ khóa tìm kiếm"
-                        onSearch={value => console.log(value)}
+                        onSearch={value => handleSearch(value)}
                         size="large"
                     />
-                    { userLogin.taiKhoan ?
+                    {visibleSearch ?
+                        <div className="search__header__wrap">
+                            <List
+                                onMouseLeave={() => setVisibleSearch(false)}
+                                itemLayout="horizontal"
+                                dataSource={listSearch}
+                                loading={listSearch?.length ? false : true}
+                                renderItem={item => (
+                                    <List.Item>
+                                        <Link to={`/detailMovie/${item.maPhim}`} onClick={() => {
+                                            dispatch(action.reloadTheaters())
+                                            setVisibleSearch(false);
+                                        }}>
+                                            <List.Item.Meta
+                                                avatar={<Avatar src={item.hinhAnh} />}
+                                                title={item.tenPhim}
+                                            />
+                                        </Link>
+                                    </List.Item>
+                                )}
+                            />
+                        </div>
+                        :
+                        <></>
+                    }
+
+
+                    {userLogin.taiKhoan ?
                         <Popover className="nav_users" placement="bottom" content={content} trigger="click">
-                            <Button>
+                            <Button size="large">
                                 {userLogin.hoTen}
                                 <DownOutlined />
                             </Button>
                         </Popover>
-                    :
-                        <Button 
+                        :
+                        <Button
                             onClick={showModal}
                             title="Đăng nhập"
                             size="large"
-                        >  
+                        >
                             <UserOutlined />
                         </Button>
                     }
@@ -212,7 +270,7 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
                                 name="taiKhoan"
                                 rules={[{ required: true, message: 'Vui lòng nhập tên tài khoản!' }]}
                             >
-                                <Input placeholder="Nhập tên tài khoản"/>
+                                <Input placeholder="Nhập tên tài khoản" />
                             </Form.Item>
 
                             <Form.Item
@@ -220,9 +278,9 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
                                 name="matKhau"
                                 rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}
                             >
-                                <Input.Password placeholder="Nhập mật khẩu"/>
+                                <Input.Password placeholder="Nhập mật khẩu" />
                             </Form.Item>
-                            <Form.Item {...tailLayout} style={{margin:'0 0 12px'}}>
+                            <Form.Item {...tailLayout} style={{ margin: '0 0 12px' }}>
                                 <Button type="ant-btn" onClick={handleCancel}>
                                     Thoát
                                 </Button>
@@ -236,6 +294,57 @@ const HeaderComponent = React.memo(({ visible, userLogin, messageLogin, theaters
                             </Form.Item>
                         </Form>
                     </Modal>
+                </div>
+                <div className="nav__mobile">
+                    <label htmlFor="collapse" className="btn-menu-mobile">
+                        <MenuOutlined />
+                    </label>
+                    <input type="checkbox" id="collapse" onClick={() => setCollapse(true)} hidden></input>
+                    <label className="bg-collapse" onClick={() => setCollapse(false)} style={collapse ? { transform: 'translateX(0%)' } : { transform: 'translateX(110%)' }}></label>
+                    <div className="mobile__nav" style={collapse ? { transform: 'translateX(0%)' } : { transform: 'translateX(110%)' }}>
+                        <ul className="mobile__list">
+                            <li>
+                                <Link to="/" onClick={() => setCollapse(false)}>Trang chủ</Link>
+                            </li>
+                            <li>
+                                <a href="#film" onClick={() => setCollapse(false)}>Phim</a>
+                            </li>
+                            <li>
+                                <a href="#newsId" onClick={() => setCollapse(false)}>Tin tức</a>
+                            </li>
+                            <li>
+                                <Popover className="nav_users" placement="bottom" content={contentTheaters} trigger="click">
+                                    <Button>
+                                        Rạp
+                                        <DownOutlined />
+                                    </Button>
+                                </Popover>
+                            </li>
+
+                            {userLogin.taiKhoan ?
+                                <li>
+                                    <Popover className="nav_users" placement="bottom" content={content} trigger="click">
+                                        <Button>
+                                            {userLogin.hoTen}
+                                            <DownOutlined />
+                                        </Button>
+                                    </Popover>
+                                </li>
+                                :
+                                <li>
+                                    <Button
+                                        className="nav_users"
+                                        onClick={showModal}
+                                        title="Đăng nhập"
+                                        size="large"
+                                    >
+                                        Đăng nhập
+                                    </Button>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+
                 </div>
             </div>
         </header>

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Row, Col, Form, Input, Button, Table, Tooltip, message } from 'antd';
 import axios from 'axios';
+import { API } from '../../configs/configs';
 import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 
@@ -9,7 +10,7 @@ const layout = {
     wrapperCol: { span: 16 },
 };
 const tailLayout = {
-    wrapperCol: { offset: 8, span: 16 },
+    wrapperCol: { span: 16 },
 };
 
 
@@ -18,10 +19,11 @@ const ProfileComponent = ({ userLogin }) => {
     const [loading, setLoading] = useState(false);
     const [user, setUser] = useState({});
     const [form] = Form.useForm();
+
     const getProfileUser = useCallback(() => {
         axios({
             method:"POST",
-            url:'http://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/ThongTinTaiKhoan',
+            url:`${API}/QuanLyNguoiDung/ThongTinTaiKhoan`,
             data: {
                 taiKhoan: userLogin.taiKhoan
             }
@@ -46,13 +48,20 @@ const ProfileComponent = ({ userLogin }) => {
                 });
         }).catch(err => console.log(err));
     },[userLogin.taiKhoan]);
+
+    const handleScrollTop = () => {
+        window.scrollTo(0,0);
+    }
     
-    useEffect(() => getProfileUser(),[]);
+    useEffect(() => {
+        handleScrollTop();
+        getProfileUser();
+    },[]);
 
     const onFinish = values => {
         axios({
             method:'PUT',
-            url:'http://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung',
+            url:`${API}/QuanLyNguoiDung/CapNhatThongTinNguoiDung`,
             headers: {
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
             },
@@ -162,8 +171,8 @@ const ProfileComponent = ({ userLogin }) => {
         <div className="profile">
             <div className="profile__wrapper">
                 <Row gutter={16}>
-                    <Col lg={6} className="left-col">
-                        <img src="https://picsum.photos/200/300" alt="" />
+                    <Col span={24} lg={6} className="left-col">
+                        <img src="/images/avatar.png" alt="" />
                         <ul className="profile__list">
                             <li>
                                 <button className="ant-btn ant-btn-block" onClick={() => setToggle(true)}>Thông tin cá nhân</button>
@@ -173,7 +182,7 @@ const ProfileComponent = ({ userLogin }) => {
                             </li>
                         </ul>
                     </Col>
-                    <Col lg={18}>
+                    <Col span={24} lg={18}>
                         {
                             toggle ? <div className="info__user">
                                 <Form

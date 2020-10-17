@@ -2,14 +2,14 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { Row, Col } from 'antd';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { API_NEWS } from '../../../../configs/configs';
 
 const NewsComponent = () => {
     const [listPost, setListPost] = useState([]);
     const getPostAPI = useCallback(() => {
         axios({
             method: 'GET',
-            url: 'https://5f34bdac9124200016e18e40.mockapi.io/news'
+            url: `${API_NEWS}`
         }).then(res => {
             setListPost(res.data);
         }).catch(err => console.log(err));

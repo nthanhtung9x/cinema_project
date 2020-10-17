@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 
-import { Row, Input, Col, Modal, Button } from 'antd';
-import {
-    AppstoreAddOutlined
-} from "@ant-design/icons";
+import { Modal, Button } from 'antd';
 
 export default function (Component, title) {
     return function ({itemUpdate, name, ...rest}) {

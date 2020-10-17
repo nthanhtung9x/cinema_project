@@ -7,10 +7,13 @@
     &__wrapper {
         width: 80%;
         margin:auto;
+        @include mediaQuery($md) {
+            width: 90%;
+        }
         .movie {
             img {
-                -o-object-fit: cover;
-                   object-fit: cover;
+                -o-object-fit: fill;
+                   object-fit: fill;
                 border-radius: 4px;
             }
             .info {
@@ -29,6 +32,9 @@
                         @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('regular'));
                         width: 24%;
                         margin: 0;
+                        @include mediaQuery($md) {
+                            width: 36%;
+                        }
                     }
                 }
                 .controls {
@@ -53,15 +59,22 @@
                 background: rgba(0,0,0,.6);
                 .ant-tabs-nav {
                     &:before {
-                        border-bottom-width: 2px;  
+                        border-bottom-width: 1px;  
                         padding: 0 24px;
                     }
                     .ant-tabs-nav-wrap {
                         .ant-tabs-nav-list {
                             width: 100%;
                             justify-content: space-around;
+                            @include mediaQuery($md) {
+                                justify-content: unset;
+                                width: auto;
+                            }
                             .ant-tabs-tab {
                                 margin: auto;
+                                @include mediaQuery($md) {
+                                    margin: auto 6px;
+                                }
                                 &.ant-tabs-tab-active {
                                     .ant-tabs-tab-btn {
                                         @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('medium'));
@@ -89,6 +102,16 @@
                                     }    
                                 }
                             }
+                            .ant-tabs-ink-bar {
+                                border-bottom: 3px solid getColor('secondary');
+                            }
+                        }
+                    }
+                    .ant-tabs-nav-operations {
+                        .ant-tabs-nav-more {
+                            .anticon {
+                                color: getColor('white');
+                            }
                         }
                     }
                 }
@@ -106,6 +129,9 @@
                                     box-shadow: 0 0 8px getColor('black');
                                     width: 70%;
                                     margin: auto;
+                                    @include mediaQuery($md) {
+                                        width: 90%;
+                                    }
                                     h4 {
                                         @include setText(getColor('white'),getFontSize('size-20'),getFontWeight('medium'));
                                         margin: 0;
@@ -121,6 +147,10 @@
                                     display:flex;
                                     align-items: center;
                                     flex-wrap: wrap;
+                                    @include mediaQuery($md) {
+                                        width: 90%;
+                                        margin: auto;
+                                    }
                                     a {
                                         @include setText(getColor('grey'),getFontSize('size-20'),getFontWeight('medium'));
                                         background-color: rgba($color: getColor('dark'), $alpha: .6);

@@ -11,6 +11,9 @@
         padding: 2px 24px;
         box-shadow: 0 0 4px;
         border-radius: 4px;
+        @include mediaQuery($md) {
+            width: 90%;
+        }
         h1 {
             @include setText(getColor('white'),getFontSize('size-32'),getFontWeight('medium'));
             text-align: center;
@@ -26,12 +29,22 @@
 
                     label {
                         @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('medium'));
+                        @include mediaQuery($md) {
+                            margin: 16px 0 0;
+                        }
                     }
                 }
                 .ant-form-item-control-input {
                     .ant-form-item-control-input-content {
                         margin-top: 8px;
                         text-align: left;
+                        @include mediaQuery($md) {
+                            margin: 0;
+                        }
+                        .btn-signup {
+                            width: 100%;
+                            margin-top: 12px;
+                        }
                     }
                     .ant-form-item-children-icon {
                         top:60%;

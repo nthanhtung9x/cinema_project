@@ -12,62 +12,82 @@ import * as action from '../../../../redux/Actions';
 
 const { TabPane } = Tabs;
 
-const FilmView = ({ dispatch , filmList, filmListSoon }) => {
+const FilmView = ({ dispatch, filmList, filmListSoon }) => {
     var settings = {
         dots: false,
         infinite: true,
         speed: 500,
         slidesToShow: 5,
-        slidesToScroll: 1
+        slidesToScroll: 1,
+        responsive: [
+            {
+                breakpoint: 992,
+                settings: {
+                    slidesToShow: 3
+                }
+            },
+            {
+                breakpoint: 767,
+                settings: {
+                    slidesToShow: 2
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 2
+                }
+            }
+        ]
     };
 
     useEffect(() => {
         dispatch(action.getFilmListAPI());
         dispatch(action.getFilmListSoonAPI());
-    },[]);
+    }, []);
 
     const renderFilmNow = () => {
         console.log(filmList);
         return filmList.map((item, index) => {
-            return  <div className="item" key={index}>
-                        <Link to={`/detailMovie/${item.maPhim}`} className="img__film">
-                            <img
-                                src={item.hinhAnh}
-                                alt={item.hinhAnh}
-                            />
-                        </Link>
-                        <article>
-                            <Link to={`/detailMovie/${item.maPhim}`}>
-                                {item.tenPhim}
-                            </Link>
-                        </article>
-                        <Link to={`/detailMovie/${item.maPhim}`} className="ant-btn ant-btn-primary ant-btn-block" size="large">
-                            <AppstoreAddOutlined />
+            return <div className="item" key={index}>
+                <Link to={`/detailMovie/${item.maPhim}`} className="img__film">
+                    <img
+                        src={item.hinhAnh}
+                        alt={item.hinhAnh}
+                    />
+                </Link>
+                <article>
+                    <Link to={`/detailMovie/${item.maPhim}`}>
+                        {item.tenPhim}
+                    </Link>
+                </article>
+                <Link to={`/detailMovie/${item.maPhim}`} className="ant-btn ant-btn-primary ant-btn-block" size="large">
+                    <AppstoreAddOutlined />
                             MUA VÉ
                         </Link>
-                    </div>
+            </div>
         })
     }
 
     const renderFilmSoon = () => {
         return filmListSoon.map((item, index) => {
-            return  <div className="item" key={index}>
-                        <Link to={`/detailMovie/${item.maPhim}`} className="img__film">
-                            <img
-                                src={item.hinhAnh}
-                                alt={item.hinhAnh}
-                            />
-                        </Link>
-                        <article>
-                            <Link to={`/detailMovie/${item.maPhim}`}>
-                                {item.tenPhim}
-                            </Link>
-                        </article>
-                        <Link to={`/detailMovie/${item.maPhim}`} className="ant-btn ant-btn-danger ant-btn-block" size="large">
-                            <AppstoreAddOutlined />
+            return <div className="item" key={index}>
+                <Link to={`/detailMovie/${item.maPhim}`} className="img__film">
+                    <img
+                        src={item.hinhAnh}
+                        alt={item.hinhAnh}
+                    />
+                </Link>
+                <article>
+                    <Link to={`/detailMovie/${item.maPhim}`}>
+                        {item.tenPhim}
+                    </Link>
+                </article>
+                <Link to={`/detailMovie/${item.maPhim}`} className="ant-btn ant-btn-danger ant-btn-block" size="large">
+                    <AppstoreAddOutlined />
                             Sắp Chiếu
                         </Link>
-                    </div>
+            </div>
         })
     }
 
@@ -85,7 +105,7 @@ const FilmView = ({ dispatch , filmList, filmListSoon }) => {
                         key="1"
                     >
                         <Slider {...settings} className="carousel">
-                           { renderFilmNow() }
+                            {renderFilmNow()}
 
                         </Slider>
                     </TabPane>
@@ -98,9 +118,9 @@ const FilmView = ({ dispatch , filmList, filmListSoon }) => {
                         }
                         key="2"
                     >
-                         <Slider {...settings} className="carousel">
-                            { renderFilmSoon() }    
-                        </Slider>                     
+                        <Slider {...settings} className="carousel">
+                            {renderFilmSoon()}
+                        </Slider>
                     </TabPane>
                 </Tabs>
             </div>

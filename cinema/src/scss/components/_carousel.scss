@@ -2,6 +2,9 @@
     height: 700px;
     overflow: hidden;
     margin-top: $height-header;
+    @include mediaQuery($md) {
+        height: 400px;
+    }
     .slick-list {
         height: 100%;
         .slick-track {
@@ -42,6 +45,10 @@
                         -webkit-filter: brightness(0.9);
                                 filter: brightness(0.9);
                         transition: all 0.2s;
+                        @include mediaQuery($md) {
+                            -o-object-fit: fill;
+                               object-fit: fill;
+                        }
                         &:hover {
                             -webkit-filter: brightness(1);
                                     filter: brightness(1);
@@ -80,13 +87,19 @@
 }
 
 .trailer__modal {
-    
+    @include mediaQuery($md) {
+        width: 80% !important; 
+    }
     .ant-modal-content {
+        border: 2px solid getColor('secondary');
+
         .ant-modal-close {
             top: -28px;
             right: -28px;
+            
             background: rgba($color: getColor('black'), $alpha: 0.6);
             color: getColor('white');
+            
             border-radius: 50%;
             opacity: 0.6;
             transition: all 0.2s;

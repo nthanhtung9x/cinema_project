@@ -1,5 +1,6 @@
 import * as types from './actionType';
 import axios from 'axios';
+import { API } from '../../configs/configs';
 
 export const showModalLogin = () => {
     return {
@@ -11,7 +12,7 @@ export const handleLoginAPI = (data) => {
     return (dispatch) => {
         return axios({
             method:'POST',
-            url: 'http://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/DangNhap',
+            url: `${API}/QuanLyNguoiDung/DangNhap`,
             data
         }).then(res => {
             dispatch(login({
@@ -39,7 +40,7 @@ export const getFilmListAPI = () => {
     return dispatch => {
         return axios({
             method:'GET',
-            url: 'http://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhimTheoNgay?maNhom=GP06&soTrang=1&soPhanTuTrenTrang=10&tuNgay=01-07-2020&denNgay=30-09-2020'
+            url: `${API}/QuanLyPhim/LayDanhSachPhimTheoNgay?maNhom=GP06&soTrang=1&soPhanTuTrenTrang=10&tuNgay=01-07-2020&denNgay=30-09-2020`
         }).then(res => {
             dispatch(getFilmList(res.data));
         }).catch(err => console.log(err));
@@ -56,7 +57,7 @@ export const getFilmListSoonAPI = () => {
     return dispatch => {
         return axios({
             method:'GET',
-            url: 'http://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhimTheoNgay?maNhom=GP01&soTrang=1&soPhanTuTrenTrang=10&tuNgay=01-09-2020&denNgay=01-01-2022'
+            url: `${API}/QuanLyPhim/LayDanhSachPhimTheoNgay?maNhom=GP01&soTrang=1&soPhanTuTrenTrang=10&tuNgay=01-09-2020&denNgay=01-01-2022`
         }).then(res => {
             dispatch(getFilmListSoon(res.data));
         }).catch(err => console.log(err));
@@ -74,7 +75,7 @@ export const getInfoBookTicketAPI = (data) => {
     return dispatch => {
         return axios({
             method:'POST',
-            url: 'http://movie0706.cybersoft.edu.vn/api/QuanLyDatVe/DatVe',
+            url: `${API}/QuanLyDatVe/DatVe`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
@@ -98,7 +99,7 @@ export const getTheatersAPI = () => {
     return dispatch => {
         return axios({
             method:'GET',
-            url:'http://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinHeThongRap'
+            url:`${API}/QuanLyRap/LayThongTinHeThongRap`
         }).then(res => {
             dispatch(getTheaters(res.data));
         }).catch(err => console.log(err));
@@ -128,7 +129,7 @@ export const getUserListAPI = () => {
     return (dispatch) => {
         return axios({
             method:'GET',
-            url:'http://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP06'
+            url:`${API}/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=GP06`
         }).then(res => dispatch(getUserList(res.data)))
         .catch(err => console.log(err));
     }
@@ -144,7 +145,7 @@ export const deleteUserAPI = (taiKhoan) => {
     return (dispatch) => {
         return axios({
             method:'DELETE',
-            url:`http://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`,
+            url:`${API}/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${taiKhoan}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`

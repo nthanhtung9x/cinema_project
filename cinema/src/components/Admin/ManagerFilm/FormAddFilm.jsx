@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Button, Form, Upload, message, DatePicker } from 'antd';
 import axios from 'axios';
+import { API } from '../../../configs/configs';
 
 import Swal from 'sweetalert2';
 
@@ -57,7 +58,7 @@ const FormAddFilm = ({ handleToggle, loading }) => {
         }
         axios({
             method: 'POST',
-            url: 'http://movie0706.cybersoft.edu.vn/api/QuanLyPhim/ThemPhimUploadHinh',
+            url: `${API}/QuanLyPhim/ThemPhimUploadHinh`,
             headers: {
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
             },

@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { Select } from 'antd';
 import { connect } from 'react-redux';
 import axios from 'axios';
+import { API } from '../../../../configs/configs';
 import { useHistory } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import moment from 'moment';
 
 const { Option } = Select;
 
@@ -26,7 +28,7 @@ const SelectFilm = ({ filmList }) => {
         });
         axios({
             method: 'GET',
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${values}`
+            url: `${API}/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${values}`
         }).then(res => {
             setTheaters(res.data.heThongRapChieu);
         }).catch(err => console.log(err));
@@ -56,7 +58,6 @@ const SelectFilm = ({ filmList }) => {
 
     // time day
     const onChangeDay = (values) => {
-        console.log(values);
         setSearch({
             ...search,
             ngayChieu: values
@@ -71,11 +72,11 @@ const SelectFilm = ({ filmList }) => {
                     if(child.tenCumRap === search.maRap) {
                         for(let i = 0; i < child.lichChieuPhim.length - 1; i++) {
                             if((i + 1) === (child.lichChieuPhim.length - 1)) {
-                                result.push(<Option value={child.lichChieuPhim[i].ngayChieuGioChieu.slice(0, 10)} key={i}>{child.lichChieuPhim[i].ngayChieuGioChieu.slice(0, 10)}</Option>)
+                                result.push(<Option value={moment(child.lichChieuPhim[i].ngayChieuGioChieu).format('YYYY-MM-DD')} key={i}>{moment(child.lichChieuPhim[i].ngayChieuGioChieu).format('DD-MM-YYYY')}</Option>)
                             }
 
-                            if(child.lichChieuPhim[i].ngayChieuGioChieu.slice(0,10) !== child.lichChieuPhim[i + 1].ngayChieuGioChieu.slice(0,10)){
-                                result.push(<Option value={child.lichChieuPhim[i].ngayChieuGioChieu.slice(0, 10)} key={i}>{child.lichChieuPhim[i].ngayChieuGioChieu.slice(0, 10)}</Option>)
+                            if(moment(child.lichChieuPhim[i].ngayChieuGioChieu).format('YYYY-MM-DD') !== moment(child.lichChieuPhim[i + 1].ngayChieuGioChieu).format('YYYY-MM-DD')){
+                                result.push(<Option value={moment(child.lichChieuPhim[i].ngayChieuGioChieu).format('YYYY-MM-DD')} key={i}>{moment(child.lichChieuPhim[i].ngayChieuGioChieu).format('DD-MM-YYYY')}</Option>)
                             }
                             
                         }
@@ -90,22 +91,22 @@ const SelectFilm = ({ filmList }) => {
     // Showtime
     const history = useHistory();
     const onChangeShowTime = (values) => {
-        let timerInterval;
-        Swal.fire({
-            timer: 2000,
-            timerProgressBar: true,
-            onBeforeOpen: () => {
-                Swal.showLoading();
-            },
-            onClose: () => {
-                clearInterval(timerInterval)
-            }
-        }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-                console.log('I was closed by the timer')
-            }
-        })
+        // let timerInterval;
+        // Swal.fire({
+        //     timer: 2000,
+        //     timerProgressBar: true,
+        //     onBeforeOpen: () => {
+        //         Swal.showLoading();
+        //     },
+        //     onClose: () => {
+        //         clearInterval(timerInterval)
+        //     }
+        // }).then((result) => {
+        //     /* Read more about handling dismissals below */
+        //     if (result.dismiss === Swal.DismissReason.timer) {
+        //         console.log('I was closed by the timer')
+        //     }
+        // })
 
         return history.push(`/bookTicket/${values}`);
     }
@@ -151,6 +152,7 @@ const SelectFilm = ({ filmList }) => {
                                 placeholder="Chọn Rạp"
                                 onChange={onChangeTheater}
                                 size="large"
+                                notFoundContent="VUI LÒNG CHỌN PHIM"
                             >
                                 {renderTheater()}
                             </Select>
@@ -161,6 +163,7 @@ const SelectFilm = ({ filmList }) => {
                                 placeholder="Chọn Ngày"
                                 onChange={onChangeDay}
                                 size="large"
+                                notFoundContent="VUI LÒNG CHỌN RẠP"
                             >
                                 {renderDay()}
                             </Select>
@@ -171,6 +174,7 @@ const SelectFilm = ({ filmList }) => {
                                 placeholder="Chọn Suất"
                                 onChange={onChangeShowTime}
                                 size="large"
+                                notFoundContent="VUI LÒNG CHỌN NGÀY CHIẾU"
                             >
                                 {renderShowTime()}
                             </Select>

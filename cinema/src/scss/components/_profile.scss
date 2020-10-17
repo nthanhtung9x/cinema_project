@@ -13,10 +13,17 @@
         height: 430px;
         margin: auto;
         text-align: center;
+        @include mediaQuery($md) {
+            height: auto;
+            width: 90%;
+        }
         .ant-row {
             height: 100%;
             .left-col {
-                border-right: 1px dotted getColor('secondary');
+                border-right: 2px dotted getColor('secondary');
+                @include mediaQuery($md) {
+                    border: none;
+                }
                 img {
                     width: 150px;
                     height: 150px;
@@ -28,6 +35,7 @@
                     li {
                         .ant-btn {
                             @include setText(getColor('black'), getFontSize('size-20'),getFontWeight('medium'));
+                            border: none;
                             height: 40px;
                             margin-bottom: 8px;
                             transition: all 0.2s;
@@ -48,6 +56,8 @@
                     }
                 }
                 .ant-form-item-control {
+                    min-width: 60% !important;
+                    margin-left: auto;
                     .ant-form-item-explain {
                         text-align: left;
                     }
@@ -58,6 +68,9 @@
                     .ant-table {
                         .ant-table-container {
                             .ant-table-content {
+                                @include mediaQuery($md) {
+                                    overflow: hidden;
+                                }
                                 .ant-table-thead {
                                     tr {
                                         .ant-table-cell {
@@ -80,6 +93,9 @@
                                             overflow: hidden;
                                             text-overflow: ellipsis;
                                             max-width: 82px;
+                                            @include mediaQuery($md) {
+                                                max-width: 50px;
+                                            }
                                         }
                                     }
                                 }

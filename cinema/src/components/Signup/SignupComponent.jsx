@@ -6,34 +6,35 @@ import {
     message
 } from 'antd';
 import axios from 'axios';
+import { API } from '../../configs/configs';
 import { connect } from 'react-redux';
 import Swal from 'sweetalert2';
 import { useHistory } from 'react-router-dom';
 
-const SignupComponent = ({ dispatch }) => {
-    const formItemLayout = {
-        labelCol: {
-          xs: { span: 24 },
-          sm: { span: 8 },
-        },
-        wrapperCol: {
-          xs: { span: 24 },
-          sm: { span: 16 },
-        },
-    };
-    const tailFormItemLayout = {
-        wrapperCol: {
-          xs: {
-            span: 24,
-            offset: 0,
-          },
-          sm: {
-            span: 16,
-            offset: 8,
-          },
-        },
-    };
-      
+const formItemLayout = {
+    labelCol: {
+      xs: { span: 24 },
+      sm: { span: 8 },
+    },
+    wrapperCol: {
+      xs: { span: 24 },
+      sm: { span: 16 },
+    },
+};
+const tailFormItemLayout = {
+    wrapperCol: {
+      xs: {
+        span: 24,
+        offset: 0,
+      },
+      sm: {
+        span: 16,
+        offset: 8,
+      },
+    },
+};
+
+const SignupComponent = ({ dispatch }) => {     
     const [form] = Form.useForm();
     const [loading, setLoading] = useState(false);
     const history = useHistory();
@@ -41,7 +42,7 @@ const SignupComponent = ({ dispatch }) => {
     const onFinish = values => {
       axios({
           method:'POST',
-          url:'http://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/DangKy',
+          url:`${API}/QuanLyNguoiDung/DangKy`,
           headers: {
               "Content-Type": "application/json"
           },
@@ -175,7 +176,7 @@ const SignupComponent = ({ dispatch }) => {
                     <Input style={{ width: '100%' }} placeholder="Nhập số điện thoại" />
                 </Form.Item>
                 <Form.Item {...tailFormItemLayout}>
-                    <Button type="primary" htmlType="submit" size="large" loading={loading}>
+                    <Button className="btn-signup" type="primary" htmlType="submit" size="large" loading={loading}>
                         Đăng ký
                     </Button>
                 </Form.Item>

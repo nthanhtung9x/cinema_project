@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Table, Space, Button, Select, TimePicker, DatePicker, Input, Modal, Form, message } from 'antd';
 import * as action from '../../../redux/Actions';
 import axios from 'axios';
+import { API } from '../../../configs/configs';
 import Swal from 'sweetalert2';
 
 const layout = {
@@ -96,10 +97,9 @@ const InfoTheater = () => {
         let ngayChieu = values['ngayChieu'].format('DD/MM/YYYY');
         let gioChieu = values['gioChieu'].format('HH:mm:ss');
         let ngayChieuGioChieu = ngayChieu + " " + gioChieu;
-        console.log(values);
         axios({
             method:"POST",
-            url:'http://movie0706.cybersoft.edu.vn/api/QuanLyDatVe/TaoLichChieu',
+            url:`${API}/QuanLyDatVe/TaoLichChieu`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`

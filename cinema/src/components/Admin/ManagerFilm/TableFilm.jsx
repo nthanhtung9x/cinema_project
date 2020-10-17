@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Table, Tooltip, Space, Button, Popconfirm, message } from 'antd';
 import axios from 'axios';
+import { API } from '../../../configs/configs';
 import Swal from 'sweetalert2';
 import FormUpdateFilm from './FormUpdateFilm';
 import ModalHOC from '../../HOC/ModalHOC';
@@ -8,7 +9,7 @@ import ModalHOC from '../../HOC/ModalHOC';
 let WrappedModalUpdateFilm = ModalHOC(FormUpdateFilm, 'CẬP NHẬT');
 
 
-const TableFilm = () => {
+const TableFilm = ({ searchName }) => {
     const [filmList, setFilmList] = useState({
         currentPage: 1,
         count: 10,
@@ -21,25 +22,41 @@ const TableFilm = () => {
 
 
     const getFilmList = () => {
-        axios({
-            method: "GET",
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayDanhSachPhimPhanTrang?maNhom=GP06&soTrang=${numPage}&soPhanTuTrenTrang=${itemPage}`,
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
-            }
-        }).then(res => {
-            if (res.data.items.length) {
-                setFilmList(res.data);
-            }
-        }).catch(err => console.log(err));
+        if(searchName) {
+            axios({
+                method: "GET",
+                url: `${API}/QuanLyPhim/LayDanhSachPhim?maNhom=GP06&tenPhim=${searchName}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
+                }
+            }).then(res => {
+                setFilmList({
+                    ...filmList,
+                    items: res.data
+                });
+            }).catch(err => console.log(err));
+        } else {
+            axios({
+                method: "GET",
+                url: `${API}/QuanLyPhim/LayDanhSachPhimPhanTrang?maNhom=GP06&soTrang=${numPage}&soPhanTuTrenTrang=${itemPage}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
+                }
+            }).then(res => {
+                if (res.data.items.length) {
+                    setFilmList(res.data);
+                }
+            }).catch(err => console.log(err));
+        }
     }
 
     const HandleChange = (page) => {
         setNumPage(page.current);
     }
 
-    useEffect(() => getFilmList(), [numPage]);
+    useEffect(() => getFilmList(), [numPage, searchName]);
 
     const renderTable = () => {
         return filmList.items.map((child, index) => {
@@ -125,7 +142,7 @@ const TableFilm = () => {
         console.log(data);
         axios({
             method:"DELETE",
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyPhim/XoaPhim?MaPhim=${data}`,
+            url: `${API}/QuanLyPhim/XoaPhim?MaPhim=${data}`,
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
@@ -161,4 +178,4 @@ const TableFilm = () => {
     )
 }
 
-export default TableFilm;
+export default React.memo(TableFilm);

@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as action from '../../../redux/Actions';
 import { DoubleRightOutlined } from "@ant-design/icons";
 import { Link } from 'react-router-dom';
+import { API } from '../../../configs/configs';
 
 defaults.global.defaultFontFamily = 'Roboto';
 
@@ -57,7 +58,7 @@ const DashBoard = () => {
     const getCountUser = (maNhom) => {
         return axios({
             method: 'GET',
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=${maNhom}`
+            url: `${API}/QuanLyNguoiDung/LayDanhSachNguoiDung?MaNhom=${maNhom}`
         }).then((res) => {
             let count = res.data.length;
             if (count) {
@@ -89,7 +90,7 @@ const DashBoard = () => {
     const getCountTheater = (maHeThongRap) => {
         axios({
             method: 'GET',
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}`
+            url: `${API}/QuanLyRap/LayThongTinCumRapTheoHeThong?maHeThongRap=${maHeThongRap}`
         }).then((res) => {
             let count = res.data.length;
             if (count) {
@@ -112,7 +113,7 @@ const DashBoard = () => {
     const getShowTimesTheater = (maHeThongRap) => {
         axios({
             method: "GET",
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap=${maHeThongRap}&maNhom=GP06`
+            url: `${API}/QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap=${maHeThongRap}&maNhom=GP06`
         }).then(res => {
             let count = 0;
             let temp = res.data[0].lstCumRap;
@@ -145,9 +146,14 @@ const DashBoard = () => {
         return result;
     }
 
+    const handleScrollTop = () => {
+        window.scrollTo(0, 0);
+    }
+
     useEffect(() => {
         promiseUserList();
         handleTheaters();
+        handleScrollTop();
     }, []);
 
     useEffect(() => {
@@ -160,15 +166,11 @@ const DashBoard = () => {
         }
     }, [theaters.length]);
 
-    useEffect(() => {
-        console.log(showTimesCount);
-    });
-
     return (
         <div className="dashBoard">
             <div className="dashBoard__wrapper">
                 <Row gutter={[16,16]}>
-                    <Col lg={8}>
+                    <Col span={24} lg={8}>
                         <div className="dashBoard__controls">
                             <Link 
                                 className="btn__controls btn__controls-1"
@@ -179,7 +181,7 @@ const DashBoard = () => {
                             </Link>
                         </div>
                     </Col>
-                    <Col lg={8}>
+                    <Col span={24} lg={8}>
                         <div className="dashBoard__controls">
                             <Link 
                                 className="btn__controls btn__controls-2"
@@ -190,7 +192,7 @@ const DashBoard = () => {
                             </Link>
                         </div>
                     </Col>
-                    <Col lg={8}>
+                    <Col span={24} lg={8}>
                         <div className="dashBoard__controls">
                             <Link 
                                 className="btn__controls btn__controls-3"
@@ -204,7 +206,7 @@ const DashBoard = () => {
                 </Row>
             </div>
             <Row gutter={[24, 24]}>
-                <Col lg={12}>
+                <Col span={24} lg={12}>
                     <div className="map">
                         <Bar
                             className="map__wrapper"
@@ -253,7 +255,7 @@ const DashBoard = () => {
                         />
                     </div>
                 </Col>
-                <Col lg={12}>
+                <Col span={24} lg={12}>
                     <div className="map">
                         <h1>THỐNG KÊ SỐ LƯỢNG RẠP</h1>
                         <Doughnut

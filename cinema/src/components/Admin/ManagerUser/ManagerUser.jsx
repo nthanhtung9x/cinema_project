@@ -6,6 +6,7 @@ import {
 import TableUser from './TableUser';
 
 import axios from 'axios';
+import { API } from '../../../configs/configs';
 import { connect } from 'react-redux';
 import * as action from '../../../redux/Actions';
 
@@ -80,7 +81,7 @@ const ManagerUser = ({ dispatch }) => {
     const onFinish = async(values) => {
         axios({
             method:'POST',
-            url:'http://movie0706.cybersoft.edu.vn/api/QuanLyNguoiDung/ThemNguoiDung',
+            url:`${API}/QuanLyNguoiDung/ThemNguoiDung`,
             headers: {
                 'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
             },

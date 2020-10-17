@@ -5,8 +5,13 @@
     right: 0;
     z-index: 20;
 
-    background-color: rgba($color: getColor('primary'), $alpha: 0.9);
-    
+    background: url('/images/background-form.jpg') no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
+    // background-color: rgba($color: getColor('primary'), $alpha: 0.9);
+    @include mediaQuery($md) {
+        background-attachment: unset;
+    }
     height: $height-header; 
     box-shadow: 0 0 1px;
     .nav {
@@ -16,18 +21,38 @@
         width: 80%;
         height: 100%;
         margin: auto;
+        @include mediaQuery($md) {
+            width: 90%;
+        }
         &__list {
+            @include mediaQuery($md) {
+                display:none;
+            }
             .ant-menu {
                 background-color: transparent;
                 border-bottom: none;
                 .ant-menu-item {
                     @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('regular'));
-                    
+                    &:hover {
+                        border-bottom:2px solid getColor('secondary');
+                    }
                     a {
                         @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('regular'));
                     }
+                    &.ant-menu-item-selected {
+                        border-bottom:2px solid getColor('secondary');
+                    }
                 }
                 .ant-menu-submenu {
+                    &:hover {
+                        border-bottom:2px solid getColor('secondary');
+                    }
+                    &.ant-menu-submenu-active {
+                        border-bottom:2px solid getColor('secondary');
+                    }
+                    &.ant-menu-submenu-selected {
+                        border-bottom:2px solid getColor('secondary');
+                    }
                     .ant-menu-submenu-title {
                         display:flex;
                         align-items: center;
@@ -53,10 +78,15 @@
             }
         }
         &__controls {
+            position: relative;
+
             display: flex;
             justify-content: flex-end;
             align-items: center;
             width: 40%;
+            @include mediaQuery($md) {
+                display:none;
+            }
             .ant-input-search {
                 border-radius: 24px;
                 input {
@@ -66,17 +96,170 @@
             button {
                 margin-left: 12px;
                 border-radius: 24px;
+                &:hover {
+                    color: getColor('secondary');
+                }
             }
             .nav_users {
-                border-radius: 4px;
                 background-color: transparent;
-                // border: 2px dotted getColor('white');
-                box-shadow: 0 0 2px getColor('grey');
+                border: 2px dotted getColor('secondary');
+                border-radius: 4px;
+                &:hover {
+                    border: 2px solid getColor('secondary');
+                }
                 span {
                     @include setText(getColor('white'),getFontSize('size-18'),getFontWeight('medium'));
                 }              
             }
+
+            .search__header__wrap {
+                position: absolute;
+                top: calc(100% + 4px);
+                left:0;
+                width: 88%;
+                z-index: 10;
+                background-color: getColor('white');
+                box-shadow: 0 0 2px getColor('grey');
+                border-radius: 4px;
+                .ant-list-items {
+                    max-height: 400px;
+                    overflow-y: auto;
+                    .ant-list-item {
+                        padding: 0;
+                        a {
+                            display: block;
+                            width: 100%;
+                            padding: 12px 0;
+                            transition: all 0.2s;
+                            &:hover {
+                                background-color: rgba($color: getColor('grey'), $alpha: 0.6);
+                            }
+                        }
+                        .ant-list-item-meta {
+                            align-items: center;
+                            padding: 0 12px;
+                            .ant-list-item-meta-avatar {
+                                .ant-avatar-image {
+                                    img {
+                                        width: 100%;
+                                        height: 100%;
+                                    }
+                                }
+                            }
+                            .ant-list-item-meta-content {
+                                .ant-list-item-meta-title {
+                                    @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('regular'));
+                                    margin: 0;
+                                }
+                            }
+                        }
+                        
+                    }
+                }
+            }
         }
+        &__mobile {
+            display: none;
+            @include mediaQuery($md) {
+                display:block;
+            }
+            .btn-menu-mobile {
+                display:none;
+                font-size: getFontSize('size-32');
+                @include mediaQuery($md) {
+                    display:block;
+                }
+                .anticon {
+                    color: getColor('secondary');
+                }
+            }
+            .mobile__nav {
+                position: fixed;
+                top:0;
+                right: 0;
+                bottom: 0;
+                transform: translateX(110%);
+                width: 50%;
+                transition: all 0.4s;
+                z-index: 99999999999999;
+
+                background: url('/images/background-form.jpg') no-repeat;
+                background-size: cover;
+
+                display: none;
+
+
+                @include mediaQuery($md) {
+                    width: 80%;
+                    display:block;
+                }
+                .mobile__list {
+                    padding: 12px;
+                    li {
+                        margin: 12px 0;
+                        text-align: center;
+                        transition: all 0.2s;
+                        &:hover {
+                            background-color: getColor('secondary');
+                        }
+                        a {
+                            @include setText(getColor('white'),getFontSize('size-24'),getFontWeight('medium'));
+                        }
+                        .nav_users {
+                            background-color: transparent;
+                            border: none;
+                            height: 100%;
+                            span {
+                                @include setText(getColor('white'),getFontSize('size-24'),getFontWeight('medium'));
+                            }              
+                            .anticon {
+                                font-size: getFontSize('size-18');
+                            }
+                        }
+                        .user {
+                            .content {
+                                display:flex;
+                                align-items: center;
+                                justify-content: center;
+                                margin: 0;
+                                i {
+                                    @include setText(getColor('white'),getFontSize('size-16'),getFontWeight('medium'));
+                                }
+                                .avatar {
+                                    font-size: getFontSize('size-32');
+                                }
+                                span {
+                                    @include setText(getColor('white'),getFontSize('size-24'),getFontWeight('medium'));
+                                    margin: 0 12px;
+                                }
+                            }
+                            .user__feature {
+                                display:flex;
+                                flex-direction: column;
+                                a {
+                                    margin: 4px 0;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            .bg-collapse {
+                position: fixed;
+                top:0;
+                right: 0;
+                bottom: 0;
+                transform: translateX(100%);
+                width: 100%;
+                z-index: 9;
+                background-color: rgba($color: getColor('black'), $alpha: 0.6);
+            }
+            #collapse:checked ~ .mobile__nav, #collapse:checked ~ .bg-collapse {
+                transform: translateX(0%);
+            }
+        }
+
+    
     }
 }
 
@@ -89,6 +272,15 @@
                 .ant-menu-item-group-list {
                     .ant-menu-item {
                         margin-bottom: 0;
+                    }             
+                }
+            }
+            .ant-menu-item-group-list {
+                .ant-menu-item {
+                    &.ant-menu-item-selected {
+                        a {
+                            color: getColor('secondary');
+                        }
                     }
                 }
             }
@@ -98,14 +290,29 @@
 
 
 .login__modal {
+    @include mediaQuery($md) {
+        width: 90% !important;
+        
+    }
     .ant-modal-content {
+        .ant-modal-header {
+            .ant-modal-title {
+                @include setText(getColor('black'),getFontSize('size-20'),getFontWeight('medium'));
+            }
+        }
+
         .ant-modal-body {
             padding-bottom: 2px;
             width: 90%;
             margin: auto;
             .ant-form-item {
+                justify-content: flex-end;
                 .ant-form-item-label {
                     text-align: left;
+                    padding: 0;
+                    label {
+                        @include setText(getColor('black'),getFontSize('size-18'),getFontWeight('regular'));
+                    }
                 }
                 .ant-form-item-control {
                     .ant-form-item-control-input {
@@ -136,6 +343,11 @@
                         transition: all 0.2s;
                         &:hover {
                             color: getColor('secondary');
+                        }
+                        img {
+                            width: 50px;
+                            height: 50px;
+                            margin-right: 8px;
                         }
                     }
                 }

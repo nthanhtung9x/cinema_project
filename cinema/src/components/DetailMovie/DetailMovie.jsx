@@ -1,15 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Row, Col, Modal, Tabs } from 'antd';
+import { Row, Col, Modal, Tabs, Spin } from 'antd';
 import { Link, withRouter } from 'react-router-dom';
 import axios from 'axios';
 import { connect } from 'react-redux';
 import * as action from '../../redux/Actions';
-import Swal from 'sweetalert2';
+// import Swal from 'sweetalert2';
+import { API } from '../../configs/configs';
+import moment from 'moment';
+
 const { TabPane } = Tabs;
 
-const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop) 
+const scrollToRef = (ref) => window.scrollTo(0, ref.current.offsetTop)
 
-const DetailMovie = ({ match, dispatch, userLogin, history }) => {
+const DetailMovie = ({ match, dispatch, userLogin, reload }) => {
+
+    const [isLoading, setLoading] = useState(true);
 
     //scroll
     const myRef = useRef(null)
@@ -37,54 +42,49 @@ const DetailMovie = ({ match, dispatch, userLogin, history }) => {
     };
 
     const handleScrollTop = () => {
-        // history.listen(() => {
-        //     if(action !== 'POP') {
-        //         window.scrollTo(0,0);
-        //     }
-        // });
-        // console.log(history)
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 
     useEffect(() => {
         handleScrollTop();
-        let timerInterval;
+        // let timerInterval;
         getFilmAPI();
         getDetailFilm();
         getShowTimes();
-        Swal.fire({
-            timer: 3000,
-            timerProgressBar: true,
-            onBeforeOpen: () => {
-                Swal.showLoading();
-            },
-            onClose: () => {
-                clearInterval(timerInterval)
-            }
-        }).then((result) => {
-            /* Read more about handling dismissals below */
-            if (result.dismiss === Swal.DismissReason.timer) {
-                console.log('I was closed by the timer')
-            }
-        })
-        
-    }, []);
+        // Swal.fire({
+        //     timer: 3000,
+        //     timerProgressBar: true,
+        //     onBeforeOpen: () => {
+        //         Swal.showLoading();
+        //     },
+        //     onClose: () => {
+        //         clearInterval(timerInterval)
+        //     }
+        // }).then((result) => {
+        //     /* Read more about handling dismissals below */
+        //     if (result.dismiss === Swal.DismissReason.timer) {
+        //         console.log('I was closed by the timer')
+        //     }
+        // })
+
+    }, [reload]);
 
     const [detail, setDetail] = useState({});
     const [showTimes, setShowTimes] = useState([]);
     const getDetailFilm = () => {
         axios({
             method: 'GET',
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayThongTinPhim?MaPhim=${match.params.MaPhim}`
+            url: `${API}/QuanLyPhim/LayThongTinPhim?MaPhim=${match.params.MaPhim}`
         }).then(res => {
             setDetail(res.data);
+            setLoading(false);
         }).catch(err => console.log(err));
     }
 
     const getShowTimes = () => {
         axios({
             method: 'GET',
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${match.params.MaPhim}`
+            url: `${API}/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${match.params.MaPhim}`
         }).then(res => {
             setShowTimes(res.data.heThongRapChieu);
         }).catch(err => console.log(err));
@@ -110,7 +110,8 @@ const DetailMovie = ({ match, dispatch, userLogin, history }) => {
                 <TabPane
                     tab={
                         <>
-                            <p>{formatted_date}</p>
+                            {/* <p>{formatted_date}</p> */}
+                            <p>{moment(formatted_date).format('DD-MM')}</p>
                         </>
                     }
                     key={formatted_date}
@@ -121,6 +122,8 @@ const DetailMovie = ({ match, dispatch, userLogin, history }) => {
             )
             num++;
         }
+
+
         return result;
     };
     const renderTime = () => {
@@ -166,7 +169,8 @@ const DetailMovie = ({ match, dispatch, userLogin, history }) => {
                                         maLichChieu: render[i].maLichChieu[j]
                                     }))
                                 }}>
-                                    {suat[j].slice(-8, -3)}
+                                    {/* {suat[j].slice(-8, -3)} */}
+                                    {moment(suat[j]).format('hh:mm')}
                                 </Link>
                             )
                         }
@@ -183,7 +187,7 @@ const DetailMovie = ({ match, dispatch, userLogin, history }) => {
         for (let i = 0; i < render.length; i++) {
             result.push(
                 <div className="divide__showtimes" key={i + Math.random() * 999999}>
-                    <Row gutter={16}>
+                    <Row gutter={[16, 16]}>
                         <Col lg={8}>
                             <div className="theaters">
                                 <h4>{render[i].tenCumRap}</h4>
@@ -211,12 +215,14 @@ const DetailMovie = ({ match, dispatch, userLogin, history }) => {
     const [check, setCheck] = useState(null);
     const getFilmAPI = () => {
         axios({
-            method:'GET',
-            url: `http://movie0706.cybersoft.edu.vn/api/QuanLyPhim/LayThongTinPhim?MaPhim=${match.params.MaPhim}`
+            method: 'GET',
+            url: `${API}/QuanLyPhim/LayThongTinPhim?MaPhim=${match.params.MaPhim}`
         }).then(res => {
-            let time = new Date(res.data.ngayKhoiChieu.slice(0,10));
+            // let time = new Date(res.data.ngayKhoiChieu.slice(0, 10));
+            let time = new Date(moment(res.data.ngayKhoiChieu).format('YYYY-MM-DD'));
+
             let now = new Date();
-            if(time.getTime() > now.getTime()) {
+            if (time.getTime() > now.getTime()) {
                 setCheck(false);
             } else {
                 setCheck(true);
@@ -224,67 +230,89 @@ const DetailMovie = ({ match, dispatch, userLogin, history }) => {
         }).catch(err => console.log(err));
     }
 
+
     return (
         <div className="detail__movie">
-            <div className="detail__movie__wrapper">
-                <div className="movie">
-                    <Row gutter={16}>
-                        <Col lg={8}>
-                            <img src={detail.hinhAnh} alt={detail.hinhAnh} height="540px" width="100%" />
-                        </Col>
-                        <Col lg={16}>
-                            <div className="info">
-                                <article className="title">{detail.tenPhim}</article>
-                                <p className="describe">{detail.moTa}</p>
-                                <div className="divide">
-                                    <p>Khởi chiếu:</p>
-                                    <p>{detail.ngayKhoiChieu}</p>
-                                </div>
-                                <div className="divide">
-                                    <p>Đánh giá: </p>
-                                    <p>{detail.danhGia}</p>
-                                </div>
-                                <div className="controls">
-                                    <button className="ant-btn ant-btn-danger" onClick={() => showModal()}>XEM TRAILER</button>
-                                    { check ? 
-                                            <button className="ant-btn ant-btn-primary" onClick={executeScroll}>MUA VÉ NGAY</button>
-                                        : 
-                                            <></>
-                                    }
-                                </div>
-                            </div>
-                        </Col>
-                    </Row>
+            {
+                isLoading && <div className="overlay__wrapper">
+                    <Spin
+                        style={{
+                            position: 'fixed',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%,-50%)'
+                        }}
+                        tip="Đang Tải..."
+                        size="large"
+                    >
+                    </Spin>
                 </div>
-                { check ?
-                        <div className="movie__showtimes" ref={myRef}>
-                            <h1>Lịch chiếu</h1>
-                            <Tabs defaultActiveKey={key} onChange={callback}>
-                                {renderShowTimes()}
-                            </Tabs>
+            }
+            {
+                !isLoading && <>
+                    <div className="detail__movie__wrapper">
+                        <div className="movie">
+                            <Row gutter={16}>
+                                <Col lg={8}>
+                                    <img src={detail.hinhAnh} alt={detail.hinhAnh} height="540px" width="100%" />
+                                </Col>
+                                <Col lg={16}>
+                                    <div className="info">
+                                        <article className="title">{detail.tenPhim}</article>
+                                        <p className="describe">{detail.moTa}</p>
+                                        <div className="divide">
+                                            <p>Khởi chiếu:</p>
+                                            {/* <p>{detail.ngayKhoiChieu}</p> */}
+                                            <p>{moment(detail.ngayKhoiChieu).format('DD-MM-YYYY hh:mm')}</p>
+                                        </div>
+                                        <div className="divide">
+                                            <p>Đánh giá: </p>
+                                            <p>{detail.danhGia}</p>
+                                        </div>
+                                        <div className="controls">
+                                            <button className="ant-btn ant-btn-danger" onClick={() => showModal()}>XEM TRAILER</button>
+                                            {check ?
+                                                <button className="ant-btn ant-btn-primary" onClick={executeScroll}>MUA VÉ NGAY</button>
+                                                :
+                                                <></>
+                                            }
+                                        </div>
+                                    </div>
+                                </Col>
+                            </Row>
                         </div>
-                    :
-                        <></>
-                }
-            </div>
+                        {check ?
+                            <div className="movie__showtimes" ref={myRef}>
+                                <h1>Lịch chiếu</h1>
+                                <Tabs defaultActiveKey={key} onChange={callback} >
+                                    {renderShowTimes()}
+                                </Tabs>
+                            </div>
+                            :
+                            <></>
+                        }
+                    </div>
 
-            <Modal
-                visible={modalStyle.visible}
-                confirmLoading={modalStyle.confirmLoading}
-                className="trailer__modal"
-                footer=""
-                onCancel={handleCancel}
-            >
-                <iframe style={{ width: '100%', height: '400px' }} src={detail.trailer}>
-                </iframe>
-            </Modal>
+                    <Modal
+                        visible={modalStyle.visible}
+                        confirmLoading={modalStyle.confirmLoading}
+                        className="trailer__modal"
+                        footer=""
+                        onCancel={handleCancel}
+                    >
+                        <iframe style={{ width: '100%', height: '400px' }} src={detail.trailer}>
+                        </iframe>
+                    </Modal>
+                </>
+            }
         </div>
     )
 }
 
 const mapStateToProps = state => {
     return {
-        userLogin: state.userLoginStore.userLogin
+        userLogin: state.userLoginStore.userLogin,
+        reload: state.theaters.reload
     }
 }
 

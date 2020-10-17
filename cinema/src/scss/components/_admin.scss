@@ -19,7 +19,7 @@
             span {
                 @include setText(getColor('white'),getFontSize('size-20'),getFontWeight('medium'));
                 padding: 8px;
-                border: 3px dotted getColor('white');
+                border: 3px dotted getColor('secondary');
                 border-radius: 4px;
             }
         }
@@ -155,30 +155,52 @@
                     margin: 0px auto 24px;
     
                     .ghe{
+                        background-color: transparent;
+                        color: getColor('black');
                         border: 3px solid getColor('secondary');
+                        border-radius: 5px;
+                        outline: none;
+                        
                         font-size: getFontSize('size-16');
                         margin-bottom: 1%;
-                        border-radius: 5px;
-                        color: getColor('black');
                         text-align: center;
-                        background-color: transparent;
                         padding: 0;
-                        width: 8%;
-                        margin: 6px 1%;
+                        width: 5%;
+                        margin: 6px 0.625%;
+                        cursor: unset !important;
+                    }
+
+                    .gheVip {
+                        background-color: getColor('purple');
+                        color: getColor('white');
+                        border: 1px solid getColor('purple');
+                        border-radius: 5px;
+                        outline: none;
+                        
+                        
+                        font-size: getFontSize('size-16');
+                        margin-bottom: 1%;
+                        text-align: center;
+                        padding: 0;
+                        width: 5%;
+                        margin: 6px 0.625%;
+                        @include mediaQuery($md) {
+                            font-size: getFontSize('size-12');
+                        }
                     }
     
                     .gheDaChon {
-                        border: 3px solid orange;
+                        background: getColor('red');
+                        border: 3px solid getColor('red');
+                        color: getColor('white');
+                        filter: brightness(1.2);
                     
-                        background: orange;
-                        color: #000;
-                    
-                        cursor: no-drop !important;
+                        cursor: unset !important;
                         border-radius: 5px;
                         display:inline-block;
                         padding: 0;
-                        width: 8%;
-                        margin: 6px 1%;
+                        width: 5%;
+                        margin: 6px 0.625%;
                     }
                     
                     .gheDangChon {
@@ -190,8 +212,8 @@
                         border-radius: 5px;
                         display:inline-block;
                         padding: 0;
-                        width: 8%;
-                        margin: 6px 1%;
+                        width: 5%;
+                        margin: 6px 0.625%;
     
                     }
                 }
@@ -203,17 +225,37 @@
                     display:flex;
                     align-items: center;
                     .gheDaChon {
-                        border: 3px solid orange;
+                        background: getColor('red');
+                        border: 3px solid getColor('red');
+                        filter: brightness(1.2);
                     
-                        background: orange;
-                        color: #000;
-                    
-                        cursor: no-drop !important;
+                        cursor: unset !important;
                         border-radius: 5px;
                         width: 45px;
                         height: 35px;
                         display:inline-block;
                         margin-right: 8px;
+                    }
+
+                    .gheVip {
+                        background-color: getColor('purple');
+                        color: getColor('white');
+                        border: 1px solid getColor('purple');
+                        border-radius: 5px;
+                        outline: none;
+                        
+                        
+                        font-size: getFontSize('size-16');
+                        margin-bottom: 1%;
+                        text-align: center;
+                        padding: 0;
+                        width: 45px;
+                        height: 35px;
+                        display:inline-block;
+                        margin-right: 8px;
+                        @include mediaQuery($md) {
+                            font-size: getFontSize('size-12');
+                        }
                     }
                     
                     .gheDangChon {
@@ -227,8 +269,8 @@
                         height: 35px;
                         display:inline-block;
                         margin-right: 8px;
-    
                     }
+
                     .gheChuaChon {
                         border: 3px solid getColor('secondary');
                         background-color: transparent;
@@ -401,7 +443,7 @@
                             @include setText(getColor('white'),getFontSize('size-20'),getFontWeight('medium'));
                         }
                         &-2 {
-                            background-color: getColor('yellow');
+                            background-color: getColor('third');
                             @include setText(getColor('white'),getFontSize('size-20'),getFontWeight('medium'));
                         }
                         &-3 {

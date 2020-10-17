@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Input, Button, Form, Upload, message, DatePicker } from 'antd';
 import axios from 'axios';
 import _ from 'lodash';
+import { API } from '../../../configs/configs';
 
 import Swal from 'sweetalert2';
 
@@ -76,7 +77,7 @@ const FormUpdateFilm = ({ handleToggle, loading, itemUpdate }) => {
         } else {
             axios({
                 method: 'POST',
-                url: `http://movie0706.cybersoft.edu.vn/api/QuanLyPhim/CapNhatPhimUpload`,
+                url: `${API}/QuanLyPhim/CapNhatPhimUpload`,
                 headers: {
                     'Authorization': `Bearer ${JSON.parse(localStorage.getItem('accessToken'))}`
                 },

@@ -1,7 +1,15 @@
 .footer {
-    background-color: getColor('primary');
+    background: url('/images/background-form.jpg') no-repeat;
+    background-size: cover;
+    background-attachment: fixed;
     border-top: 2px solid getColor('secondary');
     height: 350px;
+    @include mediaQuery($md) {
+        background-attachment: unset;
+    }
+    @include mediaQuery($md) {
+        height: auto;
+    }
     .footer__wrap {
         width: 90%;
         margin: auto;

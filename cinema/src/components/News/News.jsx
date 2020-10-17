@@ -1,26 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { API_NEWS } from '../../configs/configs';
+import { Spin } from 'antd';
 
 const News = ({ match }) => {
+    const [isLoading, setLoading] = useState(true);
+
     const [post, setPost] = useState({});
 
     const getPostAPI = () => {
         axios({
             method: 'GET',
-            url: `https://5f34bdac9124200016e18e40.mockapi.io/news/${match.params.id}`
+            url: `${API_NEWS}/${match.params.id}`
         }).then(res => {
-            console.log(res.data);
             setPost(res.data);
+            setLoading(false);
         }).catch(err => console.log(err));
     }
 
     const handleSscrollTop = () => {
-        window.scrollTo(0,0);
+        window.scrollTo(0, 0);
     }
 
     useEffect(() => {
         handleSscrollTop();
-        getPostAPI()
+        getPostAPI();
     }, []);
 
     const renderPost = () => {
@@ -36,8 +40,23 @@ const News = ({ match }) => {
     }
     return (
         <div className="news">
+            {
+                isLoading && <div className="overlay__wrapper">
+                    <Spin
+                        style={{
+                            position: 'fixed',
+                            top: '50%',
+                            left: '50%',
+                            transform: 'translate(-50%,-50%)'
+                        }}
+                        tip="Đang Tải..."
+                        size="large"
+                    >
+                    </Spin>
+                </div>
+            }
             <div className="news__wrapper">
-                { renderPost() }
+                {renderPost()}
             </div>
         </div>
     )

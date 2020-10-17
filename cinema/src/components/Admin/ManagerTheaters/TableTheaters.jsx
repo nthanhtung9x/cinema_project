@@ -4,6 +4,7 @@ import React, { useEffect, useState, useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import axios from 'axios';
 import * as action from '../../../redux/Actions';
+import { API } from '../../../configs/configs';
 
 import { Table, Menu, Dropdown, Space, Row, Button } from 'antd';
 
@@ -25,7 +26,7 @@ const TableTheaters = () => {
             setExpandedRow(record.key);
             return axios({
                 method: "GET",
-                url: `http://movie0706.cybersoft.edu.vn/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap=${record.maHeThongRap}&maNhom=GP06`
+                url: `${API}/QuanLyRap/LayThongTinLichChieuHeThongRap?maHeThongRap=${record.maHeThongRap}&maNhom=GP06`
             }).then(res => {
                 setDanhSachLichChieuRap([...res.data[0].lstCumRap]);
             }).catch(err => console.log(err));
